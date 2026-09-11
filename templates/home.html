@@ -11,7 +11,7 @@ Friday Retreats | Escape the Ordinary
 
 <!-- ================= HERO ================= -->
 
-<section class="hero-section">
+<section class="hero">
 
     <div class="container">
 
@@ -98,110 +98,70 @@ Friday Retreats | Escape the Ordinary
 
             {% for hotel in featured_hotels %}
 
-            <div class="col-md-6 col-lg-4">
+<div class="col-md-6 col-lg-4">
 
+    <div class="hotel-card">
 
-                <div class="hotel-card">
+        {% if hotel.images.first %}
+            <img
+                src="{{ hotel.images.first.image.url }}"
+                alt="{{ hotel.name }}"
+            >
+        {% else %}
+            <div class="hotel-image-placeholder">
+                No Image Available
+            </div>
+        {% endif %}
 
+        <div class="hotel-card-content">
 
-                    <div class="hotel-image">
+            {% if hotel.featured %}
+                <span class="badge-featured">
+                    Featured
+                </span>
+            {% endif %}
 
-                        {% with hotel.images.first as image %}
+            <h3>{{ hotel.name }}</h3>
 
-                            {% if image %}
+            <p class="hotel-location">
+                📍 {{ hotel.location }}
+            </p>
 
-                                <img
-                                    src="{{ image.image.url }}"
-                                    alt="{{ hotel.name }}"
-                                >
+            <div class="hotel-info-row">
 
-                            {% else %}
+                <span class="hotel-rating">
+                    ★ {{ hotel.rating }}
+                </span>
 
-                                <div class="image-placeholder">
-                                    <span>
-                                        {{ hotel.location }}
-                                    </span>
-                                </div>
-
-                            {% endif %}
-
-                        {% endwith %}
-
-
-                        {% if hotel.featured %}
-
-                            <span class="featured-badge">
-                                Featured
-                            </span>
-
-                        {% endif %}
-
-                    </div>
-
-
-
-                    <div class="hotel-info">
-
-                        <div class="hotel-location">
-                            {{ hotel.location }}
-                        </div>
-
-
-                        <h3>
-                            {{ hotel.name }}
-                        </h3>
-
-
-                        <div class="hotel-meta">
-
-                            <span>
-                                ★ {{ hotel.rating }}
-                            </span>
-
-                            <span>
-                                From
-                                <strong>
-                                    ₹{{ hotel.price_per_night }}
-                                </strong>
-                                / night
-                            </span>
-
-                        </div>
-
-
-                        <a
-                            href="{% url 'hotel_detail' hotel.slug %}"
-                            class="card-link"
-                        >
-                            View Hotel →
-                        </a>
-
-                    </div>
-
-                </div>
+                <span class="hotel-price">
+                    ₹{{ hotel.price_per_night }}
+                    <small>/ night</small>
+                </span>
 
             </div>
 
+            <a
+                href="{% url 'hotel_detail' hotel.slug %}"
+                class="btn btn-dark mt-3"
+            >
+                View Hotel →
+            </a>
 
-            {% empty %}
+        </div>
 
-            <div class="col-12">
+    </div>
 
-                <div class="empty-state">
+</div>
 
-                    <h4>
-                        No featured hotels yet
-                    </h4>
+{% empty %}
 
-                    <p>
-                        Add featured hotels from the Django admin.
-                    </p>
+<div class="col-12">
+    <div class="empty-state">
+        <p>No featured hotels available.</p>
+    </div>
+</div>
 
-                </div>
-
-            </div>
-
-            {% endfor %}
+{% endfor %}
 
 
         </div>
@@ -250,93 +210,64 @@ Friday Retreats | Escape the Ordinary
 
             {% for package in featured_packages %}
 
-            <div class="col-md-6 col-lg-4">
+<div class="col-md-6 col-lg-4">
 
+    <div class="package-card">
 
-                <div class="package-card">
+        {% if package.image %}
+            <img
+                src="{{ package.image.url }}"
+                alt="{{ package.name }}"
+            >
+        {% else %}
+            <div class="package-image-placeholder">
+                No Image Available
+            </div>
+        {% endif %}
 
+        <div class="package-content">
 
-                    <div class="package-top">
+            <p class="text-muted mb-2">
+                📍 {{ package.destination }}
+            </p>
 
-                        <span>
-                            {{ package.destination }}
-                        </span>
+            <h3>{{ package.name }}</h3>
 
-                        <h3>
-                            {{ package.name }}
-                        </h3>
+            <p class="package-duration">
+                {{ package.duration_days }} Days /
+                {{ package.duration_nights }} Nights
+            </p>
 
-                    </div>
+            <p>
+                {{ package.description|truncatewords:15 }}
+            </p>
 
-
-                    <div class="package-info">
-
-
-                        <div class="package-duration">
-
-                            {{ package.duration_days }}
-                            Days /
-                            {{ package.duration_nights }}
-                            Nights
-
-                        </div>
-
-
-                        <p>
-                            {{ package.description|truncatewords:22 }}
-                        </p>
-
-
-                        <div class="package-bottom">
-
-                            <div>
-
-                                <small>
-                                    Starting from
-                                </small>
-
-                                <strong>
-                                    ₹{{ package.price }}
-                                </strong>
-
-                            </div>
-
-
-                            <a
-                                href="{% url 'package_detail' package.slug %}"
-                                class="btn btn-dark"
-                            >
-                                Explore
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+            <div class="package-price">
+                Starting from ₹{{ package.price }}
             </div>
 
+            <a
+                href="{% url 'package_detail' package.slug %}"
+                class="btn btn-dark mt-3"
+            >
+                Explore
+            </a>
 
-            {% empty %}
+        </div>
 
-            <div class="col-12">
+    </div>
 
-                <div class="empty-state">
+</div>
 
-                    <h4>
-                        No packages yet
-                    </h4>
+{% empty %}
 
-                    <p>
-                        Add packages from the Django admin.
-                    </p>
+<div class="col-12">
+    <div class="empty-state">
+        <p>No packages available right now.</p>
+    </div>
+</div>
 
-                </div>
-
-            </div>
-
-            {% endfor %}
+{% endfor %}
 
 
         </div>

@@ -1,6 +1,10 @@
 from django.contrib import admin
-
 from .models import Hotel, HotelImage
+
+
+class HotelImageInline(admin.TabularInline):
+    model = HotelImage
+    extra = 3
 
 
 @admin.register(Hotel)
@@ -10,24 +14,14 @@ class HotelAdmin(admin.ModelAdmin):
         "location",
         "price_per_night",
         "rating",
-        "featured",
         "available",
-    )
-
-    list_filter = (
-        "featured",
-        "available",
-        "location",
-    )
-
-    search_fields = (
-        "name",
-        "location",
     )
 
     prepopulated_fields = {
         "slug": ("name",)
     }
+
+    inlines = [HotelImageInline]
 
 
 @admin.register(HotelImage)

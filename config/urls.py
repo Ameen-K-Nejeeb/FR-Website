@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import include, path
 from .views import home
 
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -26,4 +28,7 @@ urlpatterns = [
     path("hotels/", include("hotels.urls")),
     path("packages/", include("packages.urls")),
     path("enquiry/", include("enquiries.urls")),
+
+    
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -26,12 +26,18 @@ class Package(models.Model):
         max_digits=10,
         decimal_places=2
     )
+    image = models.ImageField(
+    upload_to="packages/",
+    blank=True,
+    null=True
+)
 
     hotels = models.ManyToManyField(
         Hotel,
         blank=True,
         related_name="packages"
     )
+    
 
     featured = models.BooleanField(
         default=False
