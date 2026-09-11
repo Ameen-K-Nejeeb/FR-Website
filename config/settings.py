@@ -17,10 +17,15 @@ DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = [
     ".vercel.app",
+    "fridayretreats.com",
+    "www.fridayretreats.com",
     "localhost",
     "127.0.0.1",
 ]
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://fridayretreats.com",
+    "https://www.fridayretreats.com",
+]
 
 # Application definition
 INSTALLED_APPS = [
