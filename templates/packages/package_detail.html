@@ -3,23 +3,138 @@
 {% block content %}
 
 <section class="section-padding">
+
     <div class="container">
 
         <div class="row">
 
             <div class="col-lg-8">
 
-                <!-- Package Image -->
-                {% if package.image %}
+                <!-- ========================================= -->
+                <!-- PACKAGE IMAGE GALLERY -->
+                <!-- ========================================= -->
+
+                {% with images=package.images.all %}
+
+                    {% if images %}
+
                     <div class="mb-4">
-                        <img
-                            src="{{ package.image.url }}"
-                            alt="{{ package.name }}"
-                            class="img-fluid rounded shadow"
-                            style="width: 100%; max-height: 500px; object-fit: cover;"
+
+                        <div
+                            id="packageImageCarousel"
+                            class="carousel slide"
                         >
+
+                            <!-- Images -->
+                            <div class="carousel-inner rounded-4">
+
+                                {% for image in images %}
+
+                                <div
+                                    class="carousel-item {% if forloop.first %}active{% endif %}"
+                                >
+
+                                    <img
+                                        src="{{ image.image.url }}"
+                                        alt="{{ image.caption|default:package.name }}"
+                                        class="d-block w-100 rounded-4 package-gallery-image"
+                                        style="
+                                            width: 100%;
+                                            height: 500px;
+                                            object-fit: cover;
+                                            cursor: pointer;
+                                        "
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#packageImageModal"
+                                        data-image="{{ image.image.url }}"
+                                        data-caption="{{ image.caption|default:package.name }}"
+                                    >
+
+                                </div>
+
+                                {% endfor %}
+
+                            </div>
+
+
+                            <!-- ================================= -->
+                            <!-- NORMAL IMAGE LEFT / RIGHT ARROWS -->
+                            <!-- ================================= -->
+
+                            {% if images|length > 1 %}
+
+                            <button
+                                class="carousel-control-prev"
+                                type="button"
+                                data-bs-target="#packageImageCarousel"
+                                data-bs-slide="prev"
+                            >
+
+                                <span
+                                    class="carousel-control-prev-icon"
+                                    aria-hidden="true"
+                                ></span>
+
+                                <span class="visually-hidden">
+                                    Previous
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                class="carousel-control-next"
+                                type="button"
+                                data-bs-target="#packageImageCarousel"
+                                data-bs-slide="next"
+                            >
+
+                                <span
+                                    class="carousel-control-next-icon"
+                                    aria-hidden="true"
+                                ></span>
+
+                                <span class="visually-hidden">
+                                    Next
+                                </span>
+
+                            </button>
+
+                            {% endif %}
+
+                        </div>
+
                     </div>
-                {% endif %}
+
+                    {% else %}
+
+                        <!-- No package images -->
+
+                        <div class="mb-4">
+
+                            <div
+                                class="rounded-4 d-flex align-items-center justify-content-center"
+                                style="
+                                    width: 100%;
+                                    height: 500px;
+                                    background: #f5f5f2;
+                                "
+                            >
+                                <span class="text-muted">
+                                    {{ package.destination }}
+                                </span>
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+                {% endwith %}
+
+
+                <!-- ========================================= -->
+                <!-- PACKAGE INFORMATION -->
+                <!-- ========================================= -->
 
                 <h1>{{ package.name }}</h1>
 
@@ -32,25 +147,54 @@
                     {{ package.duration_nights }} Nights
                 </p>
 
-                <h2>₹{{ package.price }}</h2>
+                <h2>
+                    ₹{{ package.price }}
+                </h2>
 
                 <hr>
 
-                <h3>About this package</h3>
+
+                <!-- Description -->
+
+                <h3>
+                    About this package
+                </h3>
 
                 <p>
                     {{ package.description }}
                 </p>
 
-                {% if package.hotels.all %}
-                    <h3 class="mt-4">Hotels Included</h3>
+
+                <!-- ========================================= -->
+                <!-- HOTELS -->
+                <!-- ========================================= -->
+
+                {% with hotels=package.hotels.all %}
+
+                    {% if hotels %}
+
+                    <h3 class="mt-4">
+                        Hotels Included
+                    </h3>
 
                     <ul>
-                        {% for hotel in package.hotels.all %}
-                            <li>{{ hotel.name }}</li>
+
+                        {% for hotel in hotels %}
+
+                            <li>
+                                {{ hotel.name }}
+                            </li>
+
                         {% endfor %}
+
                     </ul>
-                {% endif %}
+
+                    {% endif %}
+
+                {% endwith %}
+
+
+                <!-- Enquiry -->
 
                 <a
                     href="{% url 'enquiry_create' %}?package={{ package.slug }}"
@@ -64,6 +208,328 @@
         </div>
 
     </div>
+
 </section>
+
+
+<!-- ===================================================== -->
+<!-- LARGE PACKAGE IMAGE MODAL -->
+<!-- ===================================================== -->
+
+<div
+    class="modal fade"
+    id="packageImageModal"
+    tabindex="-1"
+    aria-hidden="true"
+>
+
+    <div
+        class="modal-dialog modal-dialog-centered modal-xl"
+    >
+
+        <div class="modal-content bg-dark border-0">
+
+
+            <!-- Modal Header -->
+
+            <div class="modal-header border-0">
+
+                <h5
+                    class="modal-title text-white"
+                    id="packageImageModalCaption"
+                >
+                    {{ package.name }}
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+
+            </div>
+
+
+            <!-- Large Image Area -->
+
+            <div
+                class="modal-body p-0 position-relative text-center"
+                style="
+                    min-height: 70vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                "
+            >
+
+                <!-- Large Image -->
+
+                <img
+                    id="packageLargeImage"
+                    src=""
+                    alt="{{ package.name }}"
+                    class="img-fluid rounded-3"
+                    style="
+                        max-height: 80vh;
+                        max-width: 90%;
+                        width: auto;
+                        object-fit: contain;
+                    "
+                >
+
+
+                <!-- Previous -->
+
+                <button
+                    id="packageLargeImagePrev"
+                    type="button"
+                    class="large-image-arrow large-image-prev"
+                >
+                    ❮
+                </button>
+
+
+                <!-- Next -->
+
+                <button
+                    id="packageLargeImageNext"
+                    type="button"
+                    class="large-image-arrow large-image-next"
+                >
+                    ❯
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- PACKAGE GALLERY CSS -->
+<!-- ===================================================== -->
+
+<style>
+
+.large-image-arrow {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 55px;
+
+    height: 55px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.85);
+
+    color: #222;
+
+    font-size: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    z-index: 10;
+
+    transition: 0.2s ease;
+}
+
+
+.large-image-arrow:hover {
+
+    background: white;
+
+    transform: translateY(-50%) scale(1.08);
+
+}
+
+
+.large-image-prev {
+
+    left: 25px;
+}
+
+
+.large-image-next {
+
+    right: 25px;
+}
+
+</style>
+
+
+<!-- ===================================================== -->
+<!-- PACKAGE GALLERY JAVASCRIPT -->
+<!-- ===================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const images = Array.from(
+        document.querySelectorAll(".package-gallery-image")
+    );
+
+    const largeImage =
+        document.getElementById("packageLargeImage");
+
+    const caption =
+        document.getElementById("packageImageModalCaption");
+
+    const previousButton =
+        document.getElementById("packageLargeImagePrev");
+
+    const nextButton =
+        document.getElementById("packageLargeImageNext");
+
+
+    let currentIndex = 0;
+
+
+    /* =========================================
+       SHOW LARGE IMAGE
+       ========================================= */
+
+    function showLargeImage(index) {
+
+        if (images.length === 0) {
+            return;
+        }
+
+
+        /* Loop to last image */
+
+        if (index < 0) {
+            index = images.length - 1;
+        }
+
+
+        /* Loop to first image */
+
+        if (index >= images.length) {
+            index = 0;
+        }
+
+
+        currentIndex = index;
+
+
+        const image = images[currentIndex];
+
+
+        largeImage.src =
+            image.getAttribute("data-image");
+
+
+        caption.textContent =
+            image.getAttribute("data-caption")
+            || "{{ package.name }}";
+
+    }
+
+
+    /* =========================================
+       CLICK NORMAL IMAGE
+       ========================================= */
+
+    images.forEach(function (image, index) {
+
+        image.addEventListener("click", function () {
+
+            currentIndex = index;
+
+            showLargeImage(currentIndex);
+
+        });
+
+    });
+
+
+    /* =========================================
+       PREVIOUS IMAGE
+       ========================================= */
+
+    previousButton.addEventListener(
+        "click",
+        function () {
+
+            showLargeImage(currentIndex - 1);
+
+        }
+    );
+
+
+    /* =========================================
+       NEXT IMAGE
+       ========================================= */
+
+    nextButton.addEventListener(
+        "click",
+        function () {
+
+            showLargeImage(currentIndex + 1);
+
+        }
+    );
+
+
+    /* =========================================
+       KEYBOARD LEFT / RIGHT
+       ========================================= */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            const modal =
+                document.getElementById(
+                    "packageImageModal"
+                );
+
+
+            if (!modal.classList.contains("show")) {
+                return;
+            }
+
+
+            if (event.key === "ArrowLeft") {
+
+                showLargeImage(
+                    currentIndex - 1
+                );
+
+            }
+
+
+            if (event.key === "ArrowRight") {
+
+                showLargeImage(
+                    currentIndex + 1
+                );
+
+            }
+
+        }
+    );
+
+});
+
+</script>
 
 {% endblock %}

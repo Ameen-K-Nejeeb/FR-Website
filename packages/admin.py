@@ -1,31 +1,42 @@
 from django.contrib import admin
+from .models import Package, PackageImage
 
-from .models import Package
+
+class PackageImageInline(admin.TabularInline):
+    model = PackageImage
+    extra = 3
 
 
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
+
     list_display = (
         "name",
         "destination",
+        "price",
         "duration_days",
         "duration_nights",
-        "price",
         "featured",
         "available",
-    )
-
-    list_filter = (
-        "featured",
-        "available",
-        "destination",
-    )
-
-    search_fields = (
-        "name",
-        "destination",
     )
 
     prepopulated_fields = {
         "slug": ("name",)
     }
+
+    filter_horizontal = (
+        "hotels",
+    )
+
+    inlines = [
+        PackageImageInline
+    ]
+
+
+@admin.register(PackageImage)
+class PackageImageAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "package",
+        "caption",
+    )
