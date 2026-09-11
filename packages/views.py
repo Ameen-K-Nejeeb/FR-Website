@@ -24,3 +24,7 @@ def package_detail(request, slug):
     }
 
     return render(request, "packages/package_detail.html", context)
+
+
+def about(request):
+    return render(request, "about.html")

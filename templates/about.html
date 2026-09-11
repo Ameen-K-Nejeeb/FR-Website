@@ -1,0 +1,1558 @@
+{% extends "base.html" %}
+
+{% block title %}
+About Us | Friday Retreats
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+/* =========================================================
+   FRIDAY RETREATS — ABOUT PAGE
+   ========================================================= */
+
+.about-page {
+    background: #f8f8f5;
+    color: #171717;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.about-hero {
+    min-height: 78vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(94, 23, 23, 0.08),
+            transparent 35%
+        ),
+        #f8f8f5;
+}
+
+.about-hero-content {
+    max-width: 900px;
+    padding: 100px 0;
+}
+
+.about-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #5e1717;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+}
+
+.about-eyebrow::before {
+    content: "";
+    width: 35px;
+    height: 2px;
+    background: #5e1717;
+}
+
+.about-hero h1 {
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -5px;
+    font-weight: 700;
+    margin-bottom: 35px;
+}
+
+.about-hero h1 span {
+    color: #5e1717;
+}
+
+.about-hero-text {
+    max-width: 700px;
+    font-size: 20px;
+    line-height: 1.8;
+    color: #666;
+}
+
+
+/* =========================================================
+   COMMON SECTION
+   ========================================================= */
+
+.about-section {
+    padding: 110px 0;
+}
+
+.about-section-label {
+    color: #5e1717;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.about-section-title {
+    font-size: clamp(2.3rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -2px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.about-section-text {
+    color: #666;
+    font-size: 17px;
+    line-height: 1.9;
+}
+
+
+/* =========================================================
+   INTRO / WHO WE ARE
+   ========================================================= */
+
+.about-intro {
+    background: #ffffff;
+}
+
+.about-intro-box {
+    max-width: 900px;
+}
+
+.about-intro-box p {
+    color: #555;
+    font-size: 19px;
+    line-height: 1.9;
+}
+
+.about-highlight {
+    color: #5e1717;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+
+.services-section {
+    background: #f8f8f5;
+}
+
+.service-card {
+    height: 100%;
+    padding: 35px;
+    background: #ffffff;
+    border: 1px solid #e8e8e4;
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.service-number {
+    color: #5e1717;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+.service-card h3 {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.service-card p {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   FR CLUB
+   ========================================================= */
+
+.club-section {
+    background: #5e1717;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.club-section::after {
+    content: "FR";
+    position: absolute;
+    right: -30px;
+    bottom: -120px;
+    font-size: 400px;
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(255,255,255,0.035);
+    pointer-events: none;
+}
+
+.club-content {
+    position: relative;
+    z-index: 2;
+}
+
+.club-label {
+    color: rgba(255,255,255,0.65);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.club-title {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: 1;
+    letter-spacing: -2px;
+    font-weight: 700;
+    margin: 20px 0;
+}
+
+.club-description {
+    max-width: 700px;
+    color: rgba(255,255,255,0.75);
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.club-price {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 25px;
+}
+
+.club-price strong {
+    font-size: 45px;
+}
+
+.club-benefit {
+    height: 100%;
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+}
+
+.club-benefit h4 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.club-benefit p {
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    margin: 0;
+}
+
+
+/* =========================================================
+   FR COINS
+   ========================================================= */
+
+.coins-section {
+    background: #ffffff;
+}
+
+.coin-card {
+    background: #f8f8f5;
+    border-radius: 28px;
+    padding: 50px;
+}
+
+.coin-symbol {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #5e1717;
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.coin-value {
+    font-size: 40px;
+    font-weight: 700;
+    color: #5e1717;
+    margin: 20px 0;
+}
+
+.coin-card p {
+    color: #666;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   WHY FRIDAY RETREATS
+   ========================================================= */
+
+.why-section {
+    background: #f8f8f5;
+}
+
+.why-item {
+    padding: 35px 0;
+    border-bottom: 1px solid #deded9;
+}
+
+.why-item:last-child {
+    border-bottom: none;
+}
+
+.why-number {
+    color: #5e1717;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.why-item h3 {
+    font-size: 25px;
+    margin: 10px 0;
+}
+
+.why-item p {
+    max-width: 650px;
+    color: #666;
+    line-height: 1.8;
+    margin: 0;
+}
+
+
+/* =========================================================
+   MISSION / VISION
+   ========================================================= */
+
+.mission-section {
+    background: #ffffff;
+}
+
+.mission-card {
+    padding: 50px;
+    height: 100%;
+    border-radius: 28px;
+    background: #f8f8f5;
+}
+
+.mission-card.dark {
+    background: #171717;
+    color: #ffffff;
+}
+
+.mission-card h3 {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    color: #5e1717;
+}
+
+.mission-card.dark h3 {
+    color: #d99b9b;
+}
+
+.mission-card h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 25px;
+}
+
+.mission-card p {
+    color: #666;
+    line-height: 1.8;
+}
+
+.mission-card.dark p {
+    color: rgba(255,255,255,0.65);
+}
+
+
+/* =========================================================
+   VALUES
+   ========================================================= */
+
+.values-section {
+    background: #f8f8f5;
+}
+
+.value-card {
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 20px;
+    height: 100%;
+    transition: 0.3s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+}
+
+.value-card h3 {
+    font-size: 21px;
+    margin-bottom: 12px;
+}
+
+.value-card p {
+    color: #666;
+    line-height: 1.7;
+    margin: 0;
+}
+
+
+/* =========================================================
+   COMMITMENT
+   ========================================================= */
+
+.commitment-section {
+    background: #ffffff;
+    text-align: center;
+}
+
+.commitment-content {
+    max-width: 850px;
+    margin: auto;
+}
+
+.commitment-content p {
+    color: #666;
+    font-size: 19px;
+    line-height: 1.9;
+}
+
+.commitment-quote {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin-top: 40px;
+}
+
+.commitment-quote span {
+    color: #5e1717;
+}
+
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.about-cta {
+    background: #171717;
+    color: #ffffff;
+    text-align: center;
+    padding: 120px 20px;
+}
+
+.about-cta h2 {
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 25px;
+}
+
+.about-cta p {
+    color: rgba(255,255,255,0.65);
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.about-cta-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.about-btn {
+    display: inline-block;
+    padding: 15px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.about-btn-primary {
+    background: #ffffff;
+    color: #171717;
+}
+
+.about-btn-primary:hover {
+    background: #5e1717;
+    color: #ffffff;
+}
+
+.about-btn-outline {
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #ffffff;
+}
+
+.about-btn-outline:hover {
+    background: #ffffff;
+    color: #171717;
+}
+
+
+/* =========================================================
+   COMPANY FOOTER
+   ========================================================= */
+
+.company-block {
+    padding: 70px 0;
+    background: #f8f8f5;
+    text-align: center;
+}
+
+.company-name {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.company-tagline {
+    color: #5e1717;
+    font-weight: 600;
+    margin: 10px 0 25px;
+}
+
+.company-details {
+    color: #777;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .about-hero {
+        min-height: auto;
+    }
+
+    .about-hero-content {
+        padding: 80px 0;
+    }
+
+    .about-hero h1 {
+        letter-spacing: -3px;
+    }
+
+    .about-section {
+        padding: 75px 0;
+    }
+
+    .service-card {
+        padding: 28px;
+    }
+
+    .club-section {
+        padding: 75px 0;
+    }
+
+    .club-section::after {
+        font-size: 250px;
+    }
+
+    .coin-card,
+    .mission-card {
+        padding: 30px;
+    }
+
+    .about-cta {
+        padding: 80px 20px;
+    }
+
+}
+
+</style>
+
+
+<div class="about-page">
+
+
+    <!-- ================================================= -->
+    <!-- HERO -->
+    <!-- ================================================= -->
+
+    <section class="about-hero">
+
+        <div class="container">
+
+            <div class="about-hero-content">
+
+                <div class="about-eyebrow">
+                    About Friday Retreats
+                </div>
+
+                <h1>
+                    Your Journey.<br>
+                    <span>Our Passion.</span>
+                </h1>
+
+                <p class="about-hero-text">
+                    We believe travel is more than simply visiting a destination.
+                    It is about discovering new places, experiencing different
+                    cultures, creating unforgettable memories, and taking a
+                    meaningful break from everyday life.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- INTRO -->
+    <!-- ================================================= -->
+
+    <section class="about-section about-intro">
+
+        <div class="container">
+
+            <div class="about-intro-box">
+
+                <div class="about-section-label">
+                    Welcome
+                </div>
+
+                <h2 class="about-section-title">
+                    More than a trip.<br>
+                    A complete journey.
+                </h2>
+
+                <p>
+                    Welcome to <span class="about-highlight">
+                    FRIDAY RETREATS
+                    </span>, a travel brand created to make every journey
+                    more meaningful, comfortable, and memorable.
+                </p>
+
+                <p>
+                    At Friday Retreats, we bring together
+                    <strong>
+                        destinations, carefully designed travel packages,
+                        hotels, travel documentation, visa assistance,
+                        forex services, and exclusive member benefits
+                    </strong>
+                    to give travelers a smoother and more complete travel
+                    experience.
+                </p>
+
+                <p>
+                    Whether you are planning a peaceful weekend escape,
+                    an adventurous holiday, a family vacation, a romantic
+                    getaway, or a carefully planned international journey,
+                    we are here to help you travel with confidence.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- WHO WE ARE -->
+    <!-- ================================================= -->
+
+    <section class="about-section">
+
+        <div class="container">
+
+            <div class="row align-items-center g-5">
+
+                <div class="col-lg-5">
+
+                    <div class="about-section-label">
+                        Who We Are
+                    </div>
+
+                    <h2 class="about-section-title">
+                        Built around<br>
+                        the traveler.
+                    </h2>
+
+                </div>
+
+                <div class="col-lg-7">
+
+                    <p class="about-section-text">
+                        <strong>FRIDAY RETREATS</strong> is the travel brand
+                        of <strong>F-Day Travel Services Pvt. Ltd.</strong>,
+                        established in 2024 and based in Peermade, Kerala.
+                    </p>
+
+                    <p class="about-section-text">
+                        Our goal is simple:
+                        <strong>
+                            make travel easier from the moment you start
+                            planning until you return home.
+                        </strong>
+                    </p>
+
+                    <p class="about-section-text">
+                        Instead of making travelers coordinate with multiple
+                        services for destinations, packages, accommodation,
+                        documentation, payments, and other travel requirements,
+                        Friday Retreats brings these experiences together
+                        through one platform.
+                    </p>
+
+                    <p class="about-section-text">
+                        We combine technology with personalized travel support
+                        to create a travel experience that is
+                        <strong>
+                            simple, transparent, convenient, and memorable.
+                        </strong>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- WHAT WE DO -->
+    <!-- ================================================= -->
+
+    <section class="about-section services-section">
+
+        <div class="container">
+
+            <div class="mb-5">
+
+                <div class="about-section-label">
+                    What We Do
+                </div>
+
+                <h2 class="about-section-title">
+                    Everything you need<br>
+                    for the journey.
+                </h2>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="service-card">
+
+                        <div class="service-number">
+                            01
+                        </div>
+
+                        <h3>
+                            Explore Destinations
+                        </h3>
+
+                        <p>
+                            Discover places worth experiencing through
+                            curated information, inspiring experiences,
+                            and carefully selected travel options.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="service-card">
+
+                        <div class="service-number">
+                            02
+                        </div>
+
+                        <h3>
+                            Travel Packages
+                        </h3>
+
+                        <p>
+                            From short getaways to complete holiday
+                            experiences, our packages are designed around
+                            different travel styles, budgets, and preferences.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="service-card">
+
+                        <div class="service-number">
+                            03
+                        </div>
+
+                        <h3>
+                            Hotel Booking
+                        </h3>
+
+                        <p>
+                            Find comfortable stays that complement your
+                            journey while exploring hotels, rooms, rates,
+                            and availability.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="service-card">
+
+                        <div class="service-number">
+                            04
+                        </div>
+
+                        <h3>
+                            Travel Documentation
+                        </h3>
+
+                        <p>
+                            We help travelers understand and prepare
+                            travel-related documentation requirements
+                            for their journey.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="service-card">
+
+                        <div class="service-number">
+                            05
+                        </div>
+
+                        <h3>
+                            Visa Assistance
+                        </h3>
+
+                        <p>
+                            Our visa assistance service provides guidance
+                            and support to make international travel
+                            preparation easier.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="service-card">
+
+                        <div class="service-number">
+                            06
+                        </div>
+
+                        <h3>
+                            Forex Services
+                        </h3>
+
+                        <p>
+                            Make your international travel preparation
+                            more convenient with support for
+                            foreign currency requirements.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- FR CLUB -->
+    <!-- ================================================= -->
+
+    <!-- <section class="about-section club-section">
+
+        <div class="container">
+
+            <div class="club-content">
+
+                <div class="club-label">
+                    Exclusive Membership
+                </div>
+
+                <h2 class="club-title">
+                    FR CLUB
+                </h2>
+
+                <p class="club-description">
+                    One membership. Endless travel benefits.
+                    FR CLUB is our exclusive membership program created
+                    to give travelers more value every time they travel
+                    with Friday Retreats.
+                </p>
+
+                <div class="club-price">
+
+                    <strong>
+                        ₹999
+                    </strong>
+
+                    <span>
+                        Lifetime Membership
+                    </span>
+
+                </div>
+
+
+                <div class="row g-4 mt-5">
+
+
+                    <div class="col-md-4">
+
+                        <div class="club-benefit">
+
+                            <h4>
+                                Member Pricing
+                            </h4>
+
+                            <p>
+                                Enjoy special pricing and exclusive offers
+                                available to FR CLUB members.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="club-benefit">
+
+                            <h4>
+                                Earn FR Coins
+                            </h4>
+
+                            <p>
+                                Earn FR Coins through eligible travel
+                                activities and transactions.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+                        <div class="club-benefit">
+
+                            <h4>
+                                Partner Benefits
+                            </h4>
+
+                            <p>
+                                Access selected benefits and offers from
+                                our travel and partner ecosystem.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section> -->
+
+
+    <!-- ================================================= -->
+    <!-- FR COINS -->
+    <!-- ================================================= -->
+
+    <!-- <section class="about-section coins-section">
+
+        <div class="container">
+
+            <div class="row align-items-center g-5">
+
+                <div class="col-lg-6">
+
+                    <div class="about-section-label">
+                        Loyalty Program
+                    </div>
+
+                    <h2 class="about-section-title">
+                        Travel More.<br>
+                        Earn More.<br>
+                        Enjoy More.
+                    </h2>
+
+                    <p class="about-section-text">
+                        FR Coins are the loyalty points within the
+                        Friday Retreats ecosystem.
+                    </p>
+
+                    <p class="about-section-text">
+                        Eligible customers can earn FR Coins through
+                        qualifying activities and use their accumulated
+                        coins toward future bookings and eligible services.
+                    </p>
+
+                </div>
+
+
+                <div class="col-lg-6">
+
+                    <div class="coin-card">
+
+                        <div class="coin-symbol">
+                            FR
+                        </div>
+
+                        <h3>
+                            FR Coins
+                        </h3>
+
+                        <div class="coin-value">
+                            1 FR Coin = ₹1
+                        </div>
+
+                        <p>
+                            Your FR Coins are stored in your digital wallet,
+                            allowing you to keep track of your balance,
+                            transactions, earnings, and redemptions.
+                        </p>
+
+                        <p>
+                            We designed the FR Coin system to reward
+                            customers for continuing to travel with us.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section> -->
+
+
+    <!-- ================================================= -->
+    <!-- WHY FRIDAY RETREATS -->
+    <!-- ================================================= -->
+
+    <section class="about-section why-section">
+
+        <div class="container">
+
+            <div class="row g-5">
+
+                <div class="col-lg-5">
+
+                    <div class="about-section-label">
+                        Why Friday Retreats?
+                    </div>
+
+                    <h2 class="about-section-title">
+                        More than<br>
+                        a booking platform.
+                    </h2>
+
+                    <p class="about-section-text">
+                        Travel planning can often become complicated.
+                        We bring the essential parts of travel together
+                        in one connected ecosystem.
+                    </p>
+
+                </div>
+
+
+                <div class="col-lg-7">
+
+
+                    <div class="why-item">
+
+                        <div class="why-number">
+                            01
+                        </div>
+
+                        <h3>
+                            Everything in One Place
+                        </h3>
+
+                        <p>
+                            Discover destinations, packages, hotels,
+                            and travel services through a single platform.
+                        </p>
+
+                    </div>
+
+
+                    <div class="why-item">
+
+                        <div class="why-number">
+                            02
+                        </div>
+
+                        <h3>
+                            Simple Experience
+                        </h3>
+
+                        <p>
+                            We focus on making travel planning
+                            straightforward and easy to understand.
+                        </p>
+
+                    </div>
+
+
+                    <div class="why-item">
+
+                        <div class="why-number">
+                            03
+                        </div>
+
+                        <h3>
+                            Personalized Support
+                        </h3>
+
+                        <p>
+                            Every traveler has different needs.
+                            We aim to provide solutions that fit
+                            individual preferences and requirements.
+                        </p>
+
+                    </div>
+
+
+                    <div class="why-item">
+
+                        <div class="why-number">
+                            04
+                        </div>
+
+                        <h3>
+                            Transparent Process
+                        </h3>
+
+                        <p>
+                            Clear information and straightforward
+                            processes help travelers make confident decisions.
+                        </p>
+
+                    </div>
+
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- MISSION & VISION -->
+    <!-- ================================================= -->
+
+    <section class="about-section mission-section">
+
+        <div class="container">
+
+            <div class="row g-4">
+
+
+                <div class="col-lg-6">
+
+                    <div class="mission-card">
+
+                        <h3>
+                            Our Mission
+                        </h3>
+
+                        <h2>
+                            To Make Travel Simple,
+                            Accessible, and Memorable.
+                        </h2>
+
+                        <p>
+                            Our mission is to build a travel ecosystem
+                            where discovering and planning a journey
+                            feels exciting rather than complicated.
+                        </p>
+
+                        <p>
+                            We strive to combine technology, hospitality,
+                            travel expertise, and personalized service
+                            to create better experiences for modern travelers.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-lg-6">
+
+                    <div class="mission-card dark">
+
+                        <h3>
+                            Our Vision
+                        </h3>
+
+                        <h2>
+                            To Become a Trusted
+                            Travel Ecosystem.
+                        </h2>
+
+                        <p>
+                            We envision Friday Retreats as a complete
+                            travel platform where people can discover
+                            destinations, plan journeys, book accommodation,
+                            access essential travel services, and enjoy
+                            exclusive rewards.
+                        </p>
+
+                        <p>
+                            Our ambition is to grow beyond simply selling
+                            travel packages and become a trusted travel
+                            companion for our customers.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- VALUES -->
+    <!-- ================================================= -->
+
+    <section class="about-section values-section">
+
+        <div class="container">
+
+            <div class="mb-5">
+
+                <div class="about-section-label">
+                    Our Values
+                </div>
+
+                <h2 class="about-section-title">
+                    What guides<br>
+                    everything we do.
+                </h2>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="value-card">
+
+                        <h3>
+                            Trust
+                        </h3>
+
+                        <p>
+                            Every great journey begins with trust.
+                            We are committed to building honest and
+                            reliable relationships with our customers.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="value-card">
+
+                        <h3>
+                            Customer First
+                        </h3>
+
+                        <p>
+                            Our customers are at the heart of everything
+                            we build. Their comfort, convenience, and
+                            satisfaction guide our decisions.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="value-card">
+
+                        <h3>
+                            Quality
+                        </h3>
+
+                        <p>
+                            From destinations and accommodation to service
+                            and support, we continuously strive to deliver
+                            quality experiences.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="value-card">
+
+                        <h3>
+                            Transparency
+                        </h3>
+
+                        <p>
+                            Clear information and straightforward processes
+                            help travelers make confident decisions.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="value-card">
+
+                        <h3>
+                            Innovation
+                        </h3>
+
+                        <p>
+                            We use technology to simplify traditional
+                            travel processes and create better digital
+                            experiences.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="value-card">
+
+                        <h3>
+                            Memorable Experiences
+                        </h3>
+
+                        <p>
+                            A successful trip is more than reaching
+                            a destination. It is about the memories
+                            created along the way.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- COMMITMENT -->
+    <!-- ================================================= -->
+
+    <section class="about-section commitment-section">
+
+        <div class="container">
+
+            <div class="commitment-content">
+
+                <div class="about-section-label">
+                    Our Commitment
+                </div>
+
+                <h2 class="about-section-title">
+                    Every traveler has<br>
+                    a different story.
+                </h2>
+
+                <p>
+                    At Friday Retreats, we understand that every
+                    journey is different.
+                </p>
+
+                <p>
+                    Some travelers search for adventure.
+                    Some want relaxation. Some travel to spend
+                    time with family. Others travel to discover
+                    something completely new.
+                </p>
+
+                <p>
+                    Whatever the reason, our commitment is to provide
+                    a reliable platform and supportive travel experience
+                    that helps you focus on what matters most.
+                </p>
+
+                <div class="commitment-quote">
+                    Enjoying<br>
+                    <span>the journey.</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- CTA -->
+    <!-- ================================================= -->
+
+    <section class="about-cta">
+
+        <div class="container">
+
+            <h2>
+                Start Your Journey.
+            </h2>
+
+            <p>
+                Your next adventure could be closer than you think.
+            </p>
+
+            <div class="about-cta-buttons">
+
+                <a
+    href="#"
+    class="btn ..."
+>
+    Explore Destinations
+</a>
+
+                <a
+                    href="{% url 'package_list' %}"
+                    class="about-btn about-btn-outline"
+                >
+                    Explore Packages
+                </a>
+
+                <a
+                    href="{% url 'hotel_list' %}"
+                    class="about-btn about-btn-outline"
+                >
+                    Explore Hotels
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- COMPANY -->
+    <!-- ================================================= -->
+
+    <section class="company-block">
+
+        <div class="container">
+
+            <div class="company-name">
+                FRIDAY RETREATS
+            </div>
+
+            <div class="company-tagline">
+                One Platform. Every Journey.
+            </div>
+
+            <div class="company-details">
+
+                F-Day Travel Services Pvt. Ltd.<br>
+                Peermade, Kerala<br>
+                Established 2024
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+{% endblock %}
+```

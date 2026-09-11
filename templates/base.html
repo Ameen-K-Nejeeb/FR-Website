@@ -52,7 +52,25 @@
 
 <!-- ================= NAVBAR ================= -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+<style>
+    .navbar-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+
+    background: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+    transition: all 0.3s ease;
+}
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-sticky navbar-light bg-white py-3">
 
     <div class="container">
 
@@ -114,6 +132,17 @@
                         href="{% url 'package_list' %}"
                     >
                         Packages
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'about' %}"
+                    >
+                        About
                     </a>
 
                 </li>
