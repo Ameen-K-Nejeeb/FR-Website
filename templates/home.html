@@ -1,0 +1,479 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Friday Retreats | Escape the Ordinary
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero-section">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <span class="hero-label">
+                YOUR NEXT ESCAPE STARTS HERE
+            </span>
+
+            <h1>
+                Escape the ordinary.
+                <br>
+                <em>Find your retreat.</em>
+            </h1>
+
+            <p>
+                Discover beautiful hotels, peaceful destinations
+                and unforgettable experiences across Kerala.
+            </p>
+
+
+            <div class="hero-actions">
+
+                <a
+                    href="{% url 'hotel_list' %}"
+                    class="btn btn-light btn-lg"
+                >
+                    Explore Hotels
+                </a>
+
+
+                <a
+                    href="{% url 'package_list' %}"
+                    class="btn btn-outline-light btn-lg"
+                >
+                    View Packages
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FEATURED HOTELS ================= -->
+
+<section class="section-padding">
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-label">
+                    STAY SOMEWHERE SPECIAL
+                </span>
+
+                <h2>
+                    Featured Hotels
+                </h2>
+
+            </div>
+
+
+            <a
+                href="{% url 'hotel_list' %}"
+                class="view-all"
+            >
+                View all →
+            </a>
+
+        </div>
+
+
+
+        <div class="row g-4">
+
+
+            {% for hotel in featured_hotels %}
+
+            <div class="col-md-6 col-lg-4">
+
+
+                <div class="hotel-card">
+
+
+                    <div class="hotel-image">
+
+                        {% with hotel.images.first as image %}
+
+                            {% if image %}
+
+                                <img
+                                    src="{{ image.image.url }}"
+                                    alt="{{ hotel.name }}"
+                                >
+
+                            {% else %}
+
+                                <div class="image-placeholder">
+                                    <span>
+                                        {{ hotel.location }}
+                                    </span>
+                                </div>
+
+                            {% endif %}
+
+                        {% endwith %}
+
+
+                        {% if hotel.featured %}
+
+                            <span class="featured-badge">
+                                Featured
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <div class="hotel-info">
+
+                        <div class="hotel-location">
+                            {{ hotel.location }}
+                        </div>
+
+
+                        <h3>
+                            {{ hotel.name }}
+                        </h3>
+
+
+                        <div class="hotel-meta">
+
+                            <span>
+                                ★ {{ hotel.rating }}
+                            </span>
+
+                            <span>
+                                From
+                                <strong>
+                                    ₹{{ hotel.price_per_night }}
+                                </strong>
+                                / night
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            href="{% url 'hotel_detail' hotel.slug %}"
+                            class="card-link"
+                        >
+                            View Hotel →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <div class="empty-state">
+
+                    <h4>
+                        No featured hotels yet
+                    </h4>
+
+                    <p>
+                        Add featured hotels from the Django admin.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= PACKAGES ================= -->
+
+<section class="section-padding packages-section">
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-label">
+                    PLAN YOUR ESCAPE
+                </span>
+
+                <h2>
+                    Popular Packages
+                </h2>
+
+            </div>
+
+
+            <a
+                href="{% url 'package_list' %}"
+                class="view-all"
+            >
+                View all →
+            </a>
+
+        </div>
+
+
+
+        <div class="row g-4">
+
+
+            {% for package in featured_packages %}
+
+            <div class="col-md-6 col-lg-4">
+
+
+                <div class="package-card">
+
+
+                    <div class="package-top">
+
+                        <span>
+                            {{ package.destination }}
+                        </span>
+
+                        <h3>
+                            {{ package.name }}
+                        </h3>
+
+                    </div>
+
+
+                    <div class="package-info">
+
+
+                        <div class="package-duration">
+
+                            {{ package.duration_days }}
+                            Days /
+                            {{ package.duration_nights }}
+                            Nights
+
+                        </div>
+
+
+                        <p>
+                            {{ package.description|truncatewords:22 }}
+                        </p>
+
+
+                        <div class="package-bottom">
+
+                            <div>
+
+                                <small>
+                                    Starting from
+                                </small>
+
+                                <strong>
+                                    ₹{{ package.price }}
+                                </strong>
+
+                            </div>
+
+
+                            <a
+                                href="{% url 'package_detail' package.slug %}"
+                                class="btn btn-dark"
+                            >
+                                Explore
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <div class="empty-state">
+
+                    <h4>
+                        No packages yet
+                    </h4>
+
+                    <p>
+                        Add packages from the Django admin.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= WHY US ================= -->
+
+<section class="why-section">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <span class="section-label">
+                WHY FRIDAY RETREATS
+            </span>
+
+            <h2>
+                More than just a stay.
+            </h2>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-md-4">
+
+                <div class="why-card">
+
+                    <div class="why-icon">
+                        01
+                    </div>
+
+                    <h3>
+                        Handpicked stays
+                    </h3>
+
+                    <p>
+                        We focus on beautiful places that
+                        make your trip genuinely memorable.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="why-card">
+
+                    <div class="why-icon">
+                        02
+                    </div>
+
+                    <h3>
+                        Curated experiences
+                    </h3>
+
+                    <p>
+                        Carefully designed packages so you
+                        can spend less time planning.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="why-card">
+
+                    <div class="why-icon">
+                        03
+                    </div>
+
+                    <h3>
+                        Personal assistance
+                    </h3>
+
+                    <p>
+                        Send us an enquiry and our team will
+                        help you plan the right experience.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta-section">
+
+    <div class="container text-center">
+
+        <span class="section-label">
+            READY TO ESCAPE?
+        </span>
+
+        <h2>
+            Your next retreat is
+            waiting.
+        </h2>
+
+        <p>
+            Tell us what you're looking for.
+            We'll help you plan the rest.
+        </p>
+
+
+        <a
+            href="{% url 'enquiry_create' %}"
+            class="btn btn-light btn-lg"
+        >
+            Send an Enquiry
+        </a>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

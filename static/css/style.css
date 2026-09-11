@@ -1,0 +1,516 @@
+/* =========================
+   GLOBAL
+========================= */
+
+:root {
+    --dark: #111111;
+    --muted: #777777;
+    --light: #f7f7f4;
+    --border: #e8e8e8;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    color: var(--dark);
+    background: #ffffff;
+}
+
+h1,
+h2,
+h3,
+.brand-logo {
+    font-family: "Playfair Display", serif;
+}
+
+a {
+    color: inherit;
+}
+
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    border-bottom: 1px solid var(--border);
+}
+
+.brand-logo {
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.brand-logo span {
+    font-style: italic;
+    font-weight: 500;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #555 !important;
+}
+
+.nav-link:hover {
+    color: #000 !important;
+}
+
+.enquiry-btn {
+    padding: 10px 20px;
+}
+
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero-section {
+    min-height: 680px;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.68),
+            rgba(0, 0, 0, 0.25)
+        ),
+        url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=85");
+
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+.hero-content {
+    max-width: 720px;
+}
+
+.hero-label,
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.hero-label {
+    opacity: 0.8;
+}
+
+.hero-content h1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 0.95;
+    margin: 20px 0;
+}
+
+.hero-content h1 em {
+    font-weight: 400;
+}
+
+.hero-content p {
+    max-width: 550px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 35px;
+}
+
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section-padding {
+    padding: 100px 0;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 45px;
+}
+
+.section-label {
+    color: #888;
+}
+
+.section-heading h2,
+.why-section h2 {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+.view-all {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+
+
+/* =========================
+   HOTEL CARDS
+========================= */
+
+.hotel-card {
+    height: 100%;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.hotel-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.1);
+}
+
+.hotel-image {
+    height: 270px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hotel-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    transition: transform 0.4s ease;
+}
+
+.hotel-card:hover .hotel-image img {
+    transform: scale(1.05);
+}
+
+.image-placeholder {
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #e9e9e9;
+
+    color: #777;
+}
+
+.featured-badge {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+
+    background: white;
+    color: black;
+
+    padding: 7px 12px;
+
+    border-radius: 50px;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.hotel-info {
+    padding: 25px;
+}
+
+.hotel-location {
+    color: #888;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.hotel-info h3 {
+    font-size: 1.55rem;
+    margin: 8px 0 18px;
+}
+
+.hotel-meta {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 0.9rem;
+    color: #666;
+
+    margin-bottom: 22px;
+}
+
+.hotel-meta strong {
+    color: #111;
+}
+
+.card-link {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+
+
+/* =========================
+   PACKAGES
+========================= */
+
+.packages-section {
+    background: var(--light);
+}
+
+.package-card {
+    height: 100%;
+
+    background: white;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+}
+
+.package-top {
+    min-height: 230px;
+
+    padding: 30px;
+
+    background: #1c1c1c;
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.package-top span {
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.75rem;
+    opacity: 0.6;
+}
+
+.package-top h3 {
+    font-size: 2rem;
+    margin: 8px 0 0;
+}
+
+.package-info {
+    padding: 28px;
+}
+
+.package-duration {
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.package-info p {
+    color: #777;
+    line-height: 1.6;
+}
+
+.package-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-top: 25px;
+}
+
+.package-bottom small {
+    display: block;
+    color: #888;
+}
+
+.package-bottom strong {
+    font-size: 1.35rem;
+}
+
+
+
+/* =========================
+   WHY SECTION
+========================= */
+
+.why-section {
+    padding: 110px 0;
+}
+
+.why-card {
+    padding: 35px;
+
+    border-top: 1px solid var(--border);
+}
+
+.why-icon {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 35px;
+}
+
+.why-card h3 {
+    font-size: 1.7rem;
+    margin-bottom: 15px;
+}
+
+.why-card p {
+    color: #777;
+    line-height: 1.7;
+}
+
+
+
+/* =========================
+   CTA
+========================= */
+
+.cta-section {
+    padding: 110px 20px;
+
+    background: #111;
+
+    color: white;
+}
+
+.cta-section .section-label {
+    color: #aaa;
+}
+
+.cta-section h2 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    margin: 15px 0;
+}
+
+.cta-section p {
+    color: #aaa;
+    max-width: 500px;
+    margin: 0 auto 30px;
+}
+
+
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+    padding: 60px;
+
+    text-align: center;
+
+    background: var(--light);
+
+    border-radius: 15px;
+
+    color: #777;
+}
+
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    background: #111;
+    color: white;
+    padding: 80px 0 30px;
+}
+
+.footer-description {
+    color: #888;
+    max-width: 400px;
+    line-height: 1.7;
+    margin-top: 20px;
+}
+
+.footer h6 {
+    margin-bottom: 20px;
+}
+
+.footer a {
+    display: block;
+    color: #888;
+    text-decoration: none;
+    margin-bottom: 12px;
+}
+
+.footer a:hover {
+    color: white;
+}
+
+.footer p {
+    color: #888;
+}
+
+.footer hr {
+    border-color: #333;
+    margin: 50px 0 25px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .hero-section {
+        min-height: 600px;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .section-padding {
+        padding: 70px 0;
+    }
+
+    .section-heading {
+        align-items: start;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hotel-image {
+        height: 230px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+}

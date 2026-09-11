@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}
+Hotels | Friday Retreats
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section-padding">
+
+    <div class="container">
+
+        <div class="mb-5">
+
+            <span class="section-label">
+                FIND YOUR STAY
+            </span>
+
+            <h1 class="display-3 fw-bold mt-2">
+                Hotels & Resorts
+            </h1>
+
+            <p class="text-muted mt-3">
+                Discover beautiful places to stay
+                for your next escape.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            {% for hotel in hotels %}
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="hotel-card">
+
+                    <div class="hotel-image">
+
+                        {% with hotel.images.first as image %}
+
+                            {% if image %}
+
+                                <img
+                                    src="{{ image.image.url }}"
+                                    alt="{{ hotel.name }}"
+                                >
+
+                            {% else %}
+
+                                <div class="image-placeholder">
+
+                                    <span>
+                                        {{ hotel.location }}
+                                    </span>
+
+                                </div>
+
+                            {% endif %}
+
+                        {% endwith %}
+
+
+                        {% if hotel.featured %}
+
+                            <span class="featured-badge">
+                                Featured
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="hotel-info">
+
+                        <div class="hotel-location">
+                            {{ hotel.location }}
+                        </div>
+
+                        <h3>
+                            {{ hotel.name }}
+                        </h3>
+
+                        <div class="hotel-meta">
+
+                            <span>
+                                ★ {{ hotel.rating }}
+                            </span>
+
+                            <span>
+                                From
+                                <strong>
+                                    ₹{{ hotel.price_per_night }}
+                                </strong>
+                                / night
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            href="{% url 'hotel_detail' hotel.slug %}"
+                            class="card-link"
+                        >
+                            View Hotel →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <div class="empty-state">
+
+                    <h4>
+                        No hotels available
+                    </h4>
+
+                    <p>
+                        Check back soon for new stays.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

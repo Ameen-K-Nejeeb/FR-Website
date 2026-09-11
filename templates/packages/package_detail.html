@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="section-padding">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-8">
+
+                <h1>{{ package.name }}</h1>
+
+                <p class="text-muted">
+                    📍 {{ package.destination }}
+                </p>
+
+                <p>
+                    {{ package.duration_days }} Days /
+                    {{ package.duration_nights }} Nights
+                </p>
+
+                <h2>₹{{ package.price }}</h2>
+
+                <hr>
+
+                <h3>About this package</h3>
+
+                <p>
+                    {{ package.description }}
+                </p>
+
+                {% if package.hotels.all %}
+                    <h3 class="mt-4">Hotels Included</h3>
+
+                    <ul>
+                        {% for hotel in package.hotels.all %}
+                            <li>{{ hotel.name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <a
+                    href="{% url 'enquiry_create' %}?package={{ package.slug }}"
+                    class="btn btn-dark mt-3"
+                >
+                    Send Enquiry
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
