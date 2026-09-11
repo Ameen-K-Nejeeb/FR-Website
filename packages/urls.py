@@ -7,5 +7,6 @@ urlpatterns = [
 
     path("about/", about, name="about"),
 
+
     path("<slug:slug>/", package_detail, name="package_detail"),
 ]
