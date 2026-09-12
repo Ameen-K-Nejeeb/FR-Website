@@ -33,6 +33,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.fridayretreats.com",
 ]
 
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
