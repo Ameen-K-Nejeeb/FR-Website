@@ -3,256 +3,101 @@
 {% block content %}
 
 <section class="section-padding">
-
     <div class="container">
-
         <div class="row">
-
             <div class="col-lg-8">
 
                 <!-- ========================================= -->
+                <!-- PACKAGE IMAGE GALLERY -->
+                <!-- ========================================= -->
+                <div class="mb-4">
+                    {% if package.image %}
+                        <!-- Main Package Image Carousel -->
+                        <div id="packageImageCarousel" class="carousel slide">
+                            <div class="carousel-inner rounded-4">
+                                <!-- Main Package Image -->
+                                <div class="carousel-item active">
+                                    <img
+                                        src="{{ package.image.url }}"
+                                        alt="{{ package.name }}"
+                                        class="d-block w-100 rounded-4 package-gallery-image"
+                                        style="width: 100%; height: 500px; object-fit: cover; cursor: pointer;"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#packageImageModal"
+                                        data-image="{{ package.image.url }}"
+                                        data-caption="{{ package.name }}"
+                                    >
+                                </div>
 
-<!-- PACKAGE IMAGE GALLERY -->
+                                <!-- Additional Package Images -->
+                                {% for image in package.images.all %}
+                                    <div class="carousel-item">
+                                        <img
+                                            src="{{ image.image.url }}"
+                                            alt="{{ image.caption|default:package.name }}"
+                                            class="d-block w-100 rounded-4 package-gallery-image"
+                                            style="width: 100%; height: 500px; object-fit: cover; cursor: pointer;"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#packageImageModal"
+                                            data-image="{{ image.image.url }}"
+                                            data-caption="{{ image.caption|default:package.name }}"
+                                        >
+                                    </div>
+                                {% endfor %}
+                            </div>
 
-<!-- ========================================= -->
-
-<div class="mb-4">
-
-```
-{% if package.image %}
-
-    <!-- ================================= -->
-    <!-- MAIN PACKAGE IMAGE -->
-    <!-- ================================= -->
-
-    <div
-        id="packageImageCarousel"
-        class="carousel slide"
-    >
-
-        <div class="carousel-inner rounded-4">
-
-            <!-- Main Package Image -->
-
-            <div class="carousel-item active">
-
-                <img
-                    src="{{ package.image.url }}"
-                    alt="{{ package.name }}"
-                    class="d-block w-100 rounded-4 package-gallery-image"
-                    style="
-                        width: 100%;
-                        height: 500px;
-                        object-fit: cover;
-                        cursor: pointer;
-                    "
-                    data-bs-toggle="modal"
-                    data-bs-target="#packageImageModal"
-                    data-image="{{ package.image.url }}"
-                    data-caption="{{ package.name }}"
-                >
-
-            </div>
-
-
-            <!-- ================================= -->
-            <!-- ADDITIONAL PACKAGE IMAGES -->
-            <!-- ================================= -->
-
-            {% for image in package.images.all %}
-
-                <div class="carousel-item">
-
-                    <img
-                        src="{{ image.image.url }}"
-                        alt="{{ image.caption|default:package.name }}"
-                        class="d-block w-100 rounded-4 package-gallery-image"
-                        style="
-                            width: 100%;
-                            height: 500px;
-                            object-fit: cover;
-                            cursor: pointer;
-                        "
-                        data-bs-toggle="modal"
-                        data-bs-target="#packageImageModal"
-                        data-image="{{ image.image.url }}"
-                        data-caption="{{ image.caption|default:package.name }}"
-                    >
-
-                </div>
-
-            {% endfor %}
-
-        </div>
-
-
-        <!-- ================================= -->
-        <!-- PREVIOUS ARROW -->
-        <!-- ================================= -->
-
-        <button
-            class="carousel-control-prev"
-            type="button"
-            data-bs-target="#packageImageCarousel"
-            data-bs-slide="prev"
-        >
-
-            <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-            ></span>
-
-            <span class="visually-hidden">
-                Previous
-            </span>
-
-        </button>
-
-
-        <!-- ================================= -->
-        <!-- NEXT ARROW -->
-        <!-- ================================= -->
-
-        <button
-            class="carousel-control-next"
-            type="button"
-            data-bs-target="#packageImageCarousel"
-            data-bs-slide="next"
-        >
-
-            <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-            ></span>
-
-            <span class="visually-hidden">
-                Next
-            </span>
-
-        </button>
-
-    </div>
-
-
-{% else %}
-
-    <!-- ================================= -->
-    <!-- NO MAIN IMAGE -->
-    <!-- ================================= -->
-
-    {% with images=package.images.all %}
-
-        {% if images %}
-
-            <div
-                id="packageImageCarousel"
-                class="carousel slide"
-            >
-
-                <div class="carousel-inner rounded-4">
-
-                    {% for image in images %}
-
-                        <div
-                            class="carousel-item {% if forloop.first %}active{% endif %}"
-                        >
-
-                            <img
-                                src="{{ image.image.url }}"
-                                alt="{{ image.caption|default:package.name }}"
-                                class="d-block w-100 rounded-4 package-gallery-image"
-                                style="
-                                    width: 100%;
-                                    height: 500px;
-                                    object-fit: cover;
-                                    cursor: pointer;
-                                "
-                                data-bs-toggle="modal"
-                                data-bs-target="#packageImageModal"
-                                data-image="{{ image.image.url }}"
-                                data-caption="{{ image.caption|default:package.name }}"
-                            >
-
+                            <!-- Carousel Controls -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#packageImageCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#packageImageCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
 
-                    {% endfor %}
+                    {% else %}
+                        <!-- Fallback If No Primary Image -->
+                        {% with images=package.images.all %}
+                            {% if images %}
+                                <div id="packageImageCarousel" class="carousel slide">
+                                    <div class="carousel-inner rounded-4">
+                                        {% for image in images %}
+                                            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                                <img
+                                                    src="{{ image.image.url }}"
+                                                    alt="{{ image.caption|default:package.name }}"
+                                                    class="d-block w-100 rounded-4 package-gallery-image"
+                                                    style="width: 100%; height: 500px; object-fit: cover; cursor: pointer;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#packageImageModal"
+                                                    data-image="{{ image.image.url }}"
+                                                    data-caption="{{ image.caption|default:package.name }}"
+                                                >
+                                            </div>
+                                        {% endfor %}
+                                    </div>
 
+                                    {% if images|length > 1 %}
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#packageImageCarousel" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#packageImageCarousel" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="rounded-4 d-flex align-items-center justify-content-center" style="width: 100%; height: 500px; background: #f5f5f2;">
+                                    <span class="text-muted">{{ package.destination }}</span>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    {% endif %}
                 </div>
-
-
-                {% if images|length > 1 %}
-
-                    <button
-                        class="carousel-control-prev"
-                        type="button"
-                        data-bs-target="#packageImageCarousel"
-                        data-bs-slide="prev"
-                    >
-
-                        <span
-                            class="carousel-control-prev-icon"
-                            aria-hidden="true"
-                        ></span>
-
-                        <span class="visually-hidden">
-                            Previous
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        class="carousel-control-next"
-                        type="button"
-                        data-bs-target="#packageImageCarousel"
-                        data-bs-slide="next"
-                    >
-
-                        <span
-                            class="carousel-control-next-icon"
-                            aria-hidden="true"
-                        ></span>
-
-                        <span class="visually-hidden">
-                            Next
-                        </span>
-
-                    </button>
-
-                {% endif %}
-
-            </div>
-
-        {% else %}
-
-            <!-- ================================= -->
-            <!-- NO IMAGES AT ALL -->
-            <!-- ================================= -->
-
-            <div
-                class="rounded-4 d-flex align-items-center justify-content-center"
-                style="
-                    width: 100%;
-                    height: 500px;
-                    background: #f5f5f2;
-                "
-            >
-
-                <span class="text-muted">
-                    {{ package.destination }}
-                </span>
-
-            </div>
-
-        {% endif %}
-
-    {% endwith %}
-
-{% endif %}
-```
-
-</div>
-
 
                 <h1>{{ package.name }}</h1>
 
@@ -261,393 +106,276 @@
                 </p>
 
                 <p>
-                    {{ package.duration_days }} Days /
-                    {{ package.duration_nights }} Nights
+                    {{ package.duration_days }} Days / {{ package.duration_nights }} Nights
                 </p>
 
-                <h2>
-                    ₹{{ package.price }}
-                </h2>
+                <h2 style="font-family: fangsong;">₹{{ package.price }}</h2>
 
                 <hr>
 
-
                 <!-- Description -->
+                <h3>About this package</h3>
+                <p>{{ package.description }}</p>
 
-                <h3>
-                    About this package
-                </h3>
+                <!-- ========================================= -->
+                <!-- DETAILED ITINERARY SECTION -->
+                <!-- ========================================= -->
+                <section class="itinerary-section my-5">
+                    <h2 class="itinerary-main-title">Detailed Itinerary</h2>
 
-                <p>
-                    {{ package.description }}
-                </p>
+                    <div class="timeline-container">
+                        {% for item in package.itineraries.all %}
+                            <div class="timeline-item">
+                                <!-- Concentric Circle Icon -->
+                                <div class="timeline-dot">
+                                    <span class="dot-inner"></span>
+                                </div>
 
+                                <!-- Content Area -->
+                                <div class="timeline-content">
+                                    <h3 class="timeline-day-title">
+                                        Day {{ item.day }}: {{ item.title }}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        {{ item.description|linebreaks }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
 
                 <!-- ========================================= -->
                 <!-- HOTELS -->
                 <!-- ========================================= -->
-
                 {% with hotels=package.hotels.all %}
-
                     {% if hotels %}
-
-                    <h3 class="mt-4">
-                        Hotels Included
-                    </h3>
-
-                    <ul>
-
-                        {% for hotel in hotels %}
-
-                            <li>
-                                {{ hotel.name }}
-                            </li>
-
-                        {% endfor %}
-
-                    </ul>
-
+                        <h3 class="mt-4">Hotels Included</h3>
+                        <ul>
+                            {% for hotel in hotels %}
+                                <li>{{ hotel.name }}</li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
-
                 {% endwith %}
 
-
-                <!-- Enquiry -->
-
-                <a
-                    href="{% url 'enquiry_create' %}?package={{ package.slug }}"
-                    class="btn btn-dark mt-3"
-                >
+                <!-- Enquiry Button -->
+                <a href="{% url 'enquiry_create' %}?package={{ package.slug }}" class="btn btn-dark mt-3">
                     Send Enquiry
                 </a>
 
             </div>
-
         </div>
-
     </div>
-
 </section>
-
 
 <!-- ===================================================== -->
 <!-- LARGE PACKAGE IMAGE MODAL -->
 <!-- ===================================================== -->
-
-<div
-    class="modal fade"
-    id="packageImageModal"
-    tabindex="-1"
-    aria-hidden="true"
->
-
-    <div
-        class="modal-dialog modal-dialog-centered modal-xl"
-    >
-
+<div class="modal fade" id="packageImageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content bg-dark border-0">
-
-
-            <!-- Modal Header -->
-
             <div class="modal-header border-0">
-
-                <h5
-                    class="modal-title text-white"
-                    id="packageImageModalCaption"
-                >
+                <h5 class="modal-title text-white" id="packageImageModalCaption">
                     {{ package.name }}
                 </h5>
-
-                <button
-                    type="button"
-                    class="btn-close btn-close-white"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
-
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-
-            <!-- Large Image Area -->
-
-            <div
-                class="modal-body p-0 position-relative text-center"
-                style="
-                    min-height: 70vh;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                "
-            >
-
-                <!-- Large Image -->
-
+            <div class="modal-body p-0 position-relative text-center" style="min-height: 70vh; display: flex; align-items: center; justify-content: center;">
                 <img
                     id="packageLargeImage"
                     src=""
                     alt="{{ package.name }}"
                     class="img-fluid rounded-3"
-                    style="
-                        max-height: 80vh;
-                        max-width: 90%;
-                        width: auto;
-                        object-fit: contain;
-                    "
+                    style="max-height: 80vh; max-width: 90%; width: auto; object-fit: contain;"
                 >
 
-
-                <!-- Previous -->
-
-                <button
-                    id="packageLargeImagePrev"
-                    type="button"
-                    class="large-image-arrow large-image-prev"
-                >
+                <button id="packageLargeImagePrev" type="button" class="large-image-arrow large-image-prev">
                     ❮
                 </button>
 
-
-                <!-- Next -->
-
-                <button
-                    id="packageLargeImageNext"
-                    type="button"
-                    class="large-image-arrow large-image-next"
-                >
+                <button id="packageLargeImageNext" type="button" class="large-image-arrow large-image-next">
                     ❯
                 </button>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
-
 <!-- ===================================================== -->
-<!-- PACKAGE GALLERY CSS -->
+<!-- STYLES -->
 <!-- ===================================================== -->
-
 <style>
-
+/* Modal Arrows */
 .large-image-arrow {
-
     position: absolute;
-
     top: 50%;
-
     transform: translateY(-50%);
-
     width: 55px;
-
     height: 55px;
-
     border: none;
-
     border-radius: 50%;
-
     background: rgba(255, 255, 255, 0.85);
-
     color: #222;
-
     font-size: 28px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     cursor: pointer;
-
     z-index: 10;
-
     transition: 0.2s ease;
 }
 
-
 .large-image-arrow:hover {
-
     background: white;
-
     transform: translateY(-50%) scale(1.08);
-
 }
 
-
 .large-image-prev {
-
     left: 25px;
 }
 
-
 .large-image-next {
-
     right: 25px;
 }
 
+/* Timeline / Detailed Itinerary Styles */
+.itinerary-main-title {
+    color: #5c1824;
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #f0e6e7;
+    padding-bottom: 0.75rem;
+}
+
+.timeline-container {
+    position: relative;
+    padding-left: 5px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 45px;
+    padding-bottom: 2.2rem;
+}
+
+/* Vertical connecting line */
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 15px;
+    bottom: -15px;
+    width: 1.5px;
+    background-color: #e6c8cd;
+}
+
+.timeline-item:last-child::before {
+    display: none;
+}
+
+/* Concentric circle marker */
+.timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #5c1824;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.dot-inner {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #5c1824;
+}
+
+.timeline-day-title {
+    color: #222222;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+}
+
+.timeline-description {
+    color: #555555;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.timeline-description p {
+    margin-bottom: 0.6rem;
+}
 </style>
 
-
 <!-- ===================================================== -->
-<!-- PACKAGE GALLERY JAVASCRIPT -->
+<!-- JAVASCRIPT -->
 <!-- ===================================================== -->
-
 <script>
-
 document.addEventListener("DOMContentLoaded", function () {
-
-    const images = Array.from(
-        document.querySelectorAll(".package-gallery-image")
-    );
-
-    const largeImage =
-        document.getElementById("packageLargeImage");
-
-    const caption =
-        document.getElementById("packageImageModalCaption");
-
-    const previousButton =
-        document.getElementById("packageLargeImagePrev");
-
-    const nextButton =
-        document.getElementById("packageLargeImageNext");
-
+    const images = Array.from(document.querySelectorAll(".package-gallery-image"));
+    const largeImage = document.getElementById("packageLargeImage");
+    const caption = document.getElementById("packageImageModalCaption");
+    const previousButton = document.getElementById("packageLargeImagePrev");
+    const nextButton = document.getElementById("packageLargeImageNext");
 
     let currentIndex = 0;
 
-
-    /* =========================================
-       SHOW LARGE IMAGE
-       ========================================= */
-
     function showLargeImage(index) {
-
-        if (images.length === 0) {
-            return;
-        }
-
-
-        /* Loop to last image */
+        if (images.length === 0) return;
 
         if (index < 0) {
             index = images.length - 1;
         }
 
-
-        /* Loop to first image */
-
         if (index >= images.length) {
             index = 0;
         }
 
-
         currentIndex = index;
-
-
         const image = images[currentIndex];
-
-
-        largeImage.src =
-            image.getAttribute("data-image");
-
-
-        caption.textContent =
-            image.getAttribute("data-caption")
-            || "{{ package.name }}";
-
+        largeImage.src = image.getAttribute("data-image");
+        caption.textContent = image.getAttribute("data-caption") || "{{ package.name }}";
     }
 
-
-    /* =========================================
-       CLICK NORMAL IMAGE
-       ========================================= */
-
     images.forEach(function (image, index) {
-
         image.addEventListener("click", function () {
-
             currentIndex = index;
-
             showLargeImage(currentIndex);
-
         });
-
     });
 
+    previousButton.addEventListener("click", function () {
+        showLargeImage(currentIndex - 1);
+    });
 
-    /* =========================================
-       PREVIOUS IMAGE
-       ========================================= */
+    nextButton.addEventListener("click", function () {
+        showLargeImage(currentIndex + 1);
+    });
 
-    previousButton.addEventListener(
-        "click",
-        function () {
+    document.addEventListener("keydown", function (event) {
+        const modal = document.getElementById("packageImageModal");
+        if (!modal.classList.contains("show")) return;
 
+        if (event.key === "ArrowLeft") {
             showLargeImage(currentIndex - 1);
-
         }
-    );
 
-
-    /* =========================================
-       NEXT IMAGE
-       ========================================= */
-
-    nextButton.addEventListener(
-        "click",
-        function () {
-
+        if (event.key === "ArrowRight") {
             showLargeImage(currentIndex + 1);
-
         }
-    );
-
-
-    /* =========================================
-       KEYBOARD LEFT / RIGHT
-       ========================================= */
-
-    document.addEventListener(
-        "keydown",
-        function (event) {
-
-            const modal =
-                document.getElementById(
-                    "packageImageModal"
-                );
-
-
-            if (!modal.classList.contains("show")) {
-                return;
-            }
-
-
-            if (event.key === "ArrowLeft") {
-
-                showLargeImage(
-                    currentIndex - 1
-                );
-
-            }
-
-
-            if (event.key === "ArrowRight") {
-
-                showLargeImage(
-                    currentIndex + 1
-                );
-
-            }
-
-        }
-    );
-
+    });
 });
-
 </script>
 
 {% endblock %}

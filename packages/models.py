@@ -64,7 +64,22 @@ class Package(models.Model):
     def __str__(self):
         return self.name
 
+class PackageItinerary(models.Model):
+    package = models.ForeignKey(
+        Package,
+        on_delete=models.CASCADE,
+        related_name="itineraries"
+    )
+    day = models.PositiveIntegerField()
+    title = models.CharField(max_length=200)
+    description = models.TextField()
 
+    class Meta:
+        ordering = ["day"]
+        unique_together = ["package", "day"]
+
+    def __str__(self):
+        return f"{self.package.name} - Day {self.day}: {self.title}"
 
 class PackageImage(models.Model):
 

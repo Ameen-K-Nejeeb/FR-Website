@@ -1,15 +1,10 @@
 from django.contrib import admin
-from .models import Package, PackageImage
-
-
-class PackageImageInline(admin.TabularInline):
-    model = PackageImage
-    extra = 3
+from .models import Package, PackageImage, PackageItinerary
 
 
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
-
+    prepopulated_fields = {"slug": ("name",)}
     list_display = (
         "name",
         "destination",
@@ -19,24 +14,19 @@ class PackageAdmin(admin.ModelAdmin):
         "featured",
         "available",
     )
-
-    prepopulated_fields = {
-        "slug": ("name",)
-    }
-
-    filter_horizontal = (
-        "hotels",
-    )
-
-    inlines = [
-        PackageImageInline
-    ]
+    list_filter = ("featured", "available")
+    search_fields = ("name", "destination")
 
 
 @admin.register(PackageImage)
 class PackageImageAdmin(admin.ModelAdmin):
+    list_display = ("package", "caption")
+    list_filter = ("package",)
 
-    list_display = (
-        "package",
-        "caption",
-    )
+
+@admin.register(PackageItinerary)
+class PackageItineraryAdmin(admin.ModelAdmin):
+    list_display = ("package", "day", "title")
+    list_filter = ("package",)
+    search_fields = ("package__name", "title", "description")
+    ordering = ("package", "day")
