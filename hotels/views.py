@@ -35,3 +35,5 @@ def hotel_detail(request, slug):
         "hotels/hotel_detail.html",
         context
     )
+
+

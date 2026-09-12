@@ -1,19 +1,29 @@
-{% extends "base.html" %}
-
-{% block content %}
-
-<section class="section-padding">
+<!-- ================= PACKAGES ================= -->
+<section class="section-padding packages-section">
     <div class="container">
 
         <div class="section-heading">
-            <span>Explore</span>
-            <h1>Our Packages</h1>
-            <p>Discover unforgettable experiences across Kerala.</p>
+            <div>
+                <span class="section-label">
+                    PLAN YOUR ESCAPE
+                </span>
+
+                <h2>
+                    Popular Packages
+                </h2>
+            </div>
+
+            <a
+                href="{% url 'package_list' %}"
+                class="view-all"
+            >
+                View all →
+            </a>
         </div>
 
         <div class="row g-4">
 
-            {% for package in packages %}
+            {% for package in featured_packages %}
 
             <div class="col-md-6 col-lg-4">
 
@@ -28,36 +38,38 @@
                         >
                     {% else %}
                         <div class="package-image-placeholder">
-                            No Image
+                            No Image Available
                         </div>
                     {% endif %}
 
                     <div class="package-content">
 
-                        <h3>{{ package.name }}</h3>
-
-                        <p class="text-muted">
+                        <p class="text-muted mb-2">
                             📍 {{ package.destination }}
                         </p>
 
-                        <p>
-                            {{ package.description|truncatewords:20 }}
+                        <h3>
+                            {{ package.name }}
+                        </h3>
+
+                        <p class="package-duration">
+                            {{ package.duration_days }} Days /
+                            {{ package.duration_nights }} Nights
                         </p>
 
                         <p>
-                            <strong>
-                                {{ package.duration_days }} Days /
-                                {{ package.duration_nights }} Nights
-                            </strong>
+                            {{ package.description|truncatewords:15 }}
                         </p>
 
-                        <h4>₹{{ package.price }}</h4>
+                        <div class="package-price">
+                            Starting from ₹{{ package.price }}
+                        </div>
 
                         <a
                             href="{% url 'package_detail' package.slug %}"
-                            class="btn btn-dark mt-2"
+                            class="btn btn-dark mt-3"
                         >
-                            View Package →
+                            Explore
                         </a>
 
                     </div>
@@ -68,8 +80,10 @@
 
             {% empty %}
 
-            <div class="col-12 text-center">
-                <p>No packages available right now.</p>
+            <div class="col-12">
+                <div class="empty-state">
+                    <p>No packages available right now.</p>
+                </div>
             </div>
 
             {% endfor %}
@@ -78,5 +92,3 @@
 
     </div>
 </section>
-
-{% endblock %}
