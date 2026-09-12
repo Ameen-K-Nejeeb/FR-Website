@@ -100,3 +100,6 @@ class PackageImage(models.Model):
 
     def __str__(self):
         return f"{self.package.name} - Image"
+
+
+    

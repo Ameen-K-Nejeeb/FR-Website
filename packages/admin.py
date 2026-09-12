@@ -14,8 +14,12 @@ class PackageAdmin(admin.ModelAdmin):
         "featured",
         "available",
     )
-    list_filter = ("featured", "available")
-    search_fields = ("name", "destination")
+    list_filter = ("available", "featured", "destination")
+    search_fields = ("name", "destination", "description")
+    prepopulated_fields = {"slug": ("name",)}
+
+    # Replaces the multi-select box with the dual-column widget
+    filter_horizontal = ("hotels",)
 
 
 @admin.register(PackageImage)

@@ -1,191 +1,134 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <section class="section-padding">
     <div class="container">
-
-        <div class="section-heading text-center">
-            <span>Get in touch</span>
-            <h1>Send an Enquiry</h1>
-            <p>Tell us about your trip and we'll get back to you.</p>
-        </div>
-
         <div class="row justify-content-center">
-
             <div class="col-lg-8">
 
-                <form method="POST" class="enquiry-form">
+                <div class="enquiry-form">
+                    <h2 class="mb-4">Send an Enquiry</h2>
 
-                    {% csrf_token %}
+                    <form method="POST">
+                        {% csrf_token %}
 
-                    <div class="row g-3">
-
-                        <div class="col-md-6">
-                            <label class="form-label">
-                                Your Name
-                            </label>
-
-                            <input
-                                type="text"
-                                name="customer_name"
-                                class="form-control"
-                                required
-                            >
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">
-                                Phone Number
-                            </label>
-
-                            <input
-                                type="tel"
-                                name="phone"
-                                class="form-control"
-                                required
-                            >
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label">
-                                Email
-                            </label>
-
-                            <input
-                                type="email"
-                                name="email"
-                                class="form-control"
-                            >
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">
-                                Hotel
-                            </label>
-
-                            <select name="hotel" class="form-select">
-
-                                <option value="">
-                                    Select Hotel
-                                </option>
-
-                                {% for hotel in hotels %}
-
-                                <option
-                                    value="{{ hotel.id }}"
-                                    {% if selected_hotel == hotel.slug %}
-                                        selected
-                                    {% endif %}
+                        <!-- CASE 1: LOCKED PACKAGE + INCLUDED HOTELS -->
+                        {% if locked_package %}
+                            <div class="mb-3">
+                                <label class="form-label">Selected Package</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    value="{{ locked_package.name }} (₹{{ locked_package.price }})" 
+                                    readonly 
+                                    disabled
                                 >
-                                    {{ hotel.name }}
-                                </option>
+                                <input type="hidden" name="package" value="{{ locked_package.id }}">
+                            </div>
 
-                                {% endfor %}
+                            <div class="mb-3">
+                                <label class="form-label">Hotels Included in this Package</label>
+                                {% if locked_package.hotels.all %}
+                                    <ul class="list-group">
+                                        {% for h in locked_package.hotels.all %}
+                                            <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
+                                                <span>🏨 {{ h.name }}</span>
+                                                <small class="text-muted">{{ h.destination|default:h.location }}</small>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        value="Standard accommodations arranged per itinerary" 
+                                        readonly 
+                                        disabled
+                                    >
+                                {% endif %}
+                            </div>
 
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">
-                                Package
-                            </label>
-
-                            <select name="package" class="form-select">
-
-                                <option value="">
-                                    Select Package
-                                </option>
-
-                                {% for package in packages %}
-
-                                <option
-                                    value="{{ package.id }}"
-                                    {% if selected_package == package.slug %}
-                                        selected
-                                    {% endif %}
+                        <!-- CASE 2: LOCKED HOTEL ONLY -->
+                        {% elif locked_hotel %}
+                            <div class="mb-3">
+                                <label class="form-label">Selected Hotel</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    value="{{ locked_hotel.name }} — {{ locked_hotel.destination|default:locked_hotel.location }}" 
+                                    readonly 
+                                    disabled
                                 >
-                                    {{ package.name }}
-                                </option>
+                                <input type="hidden" name="hotel" value="{{ locked_hotel.id }}">
+                            </div>
 
-                                {% endfor %}
+                        <!-- CASE 3: GENERAL ENQUIRY (SELECT HOTEL OR PACKAGE) -->
+                        {% else %}
+                            <div class="mb-3">
+                                <label for="hotel" class="form-label">Select Hotel (Optional)</label>
+                                <select name="hotel" id="hotel" class="form-select">
+                                    <option value="">-- Choose Hotel --</option>
+                                    {% for h in hotels %}
+                                        <option value="{{ h.id }}">{{ h.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
 
-                            </select>
+                            <div class="mb-3">
+                                <label for="package" class="form-label">Select Package (Optional)</label>
+                                <select name="package" id="package" class="form-select">
+                                    <option value="">-- Choose Package --</option>
+                                    {% for p in packages %}
+                                        <option value="{{ p.id }}">{{ p.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+
+                        <!-- Customer Details -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Your Name *</label>
+                                <input type="text" name="customer_name" class="form-control" required placeholder="John Doe">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Phone Number *</label>
+                                <input type="tel" name="phone" class="form-control" required placeholder="+91 9876543210">
+                            </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <label class="form-label">
-                                Travel Date
-                            </label>
-
-                            <input
-                                type="date"
-                                name="travel_date"
-                                class="form-control"
-                            >
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" name="email" class="form-control" placeholder="john@example.com">
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label">
-                                Adults
-                            </label>
-
-                            <input
-                                type="number"
-                                name="adults"
-                                class="form-control"
-                                value="1"
-                                min="1"
-                            >
+                        <!-- Booking Details -->
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Travel Date</label>
+                                <input type="date" name="travel_date" class="form-control">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Adults</label>
+                                <input type="number" name="adults" class="form-control" value="1" min="1">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Children</label>
+                                <input type="number" name="children" class="form-control" value="0" min="0">
+                            </div>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label">
-                                Children
-                            </label>
-
-                            <input
-                                type="number"
-                                name="children"
-                                class="form-control"
-                                value="0"
-                                min="0"
-                            >
+                        <div class="mb-4">
+                            <label class="form-label">Message / Special Requests</label>
+                            <textarea name="message" class="form-control" rows="4" placeholder="Any specific requirements or queries..."></textarea>
                         </div>
 
-                        <div class="col-12">
-                            <label class="form-label">
-                                Message
-                            </label>
-
-                            <textarea
-                                name="message"
-                                class="form-control"
-                                rows="5"
-                                placeholder="Tell us about your trip..."
-                            ></textarea>
-                        </div>
-
-                        <div class="col-12">
-
-                            <button
-                                type="submit"
-                                class="btn btn-dark btn-lg"
-                            >
-                                Send Enquiry
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </form>
+                        <button type="submit" class="btn btn-dark w-100">Send Enquiry</button>
+                    </form>
+                </div>
 
             </div>
-
         </div>
-
     </div>
 </section>
-
 {% endblock %}

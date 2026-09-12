@@ -118,6 +118,84 @@
                 <p>{{ package.description }}</p>
 
                 <!-- ========================================= -->
+                <!-- HOTELS SECTION (BEFORE ITINERARY) -->
+                <!-- ========================================= -->
+                {% with hotels=package.hotels.all %}
+                    {% if hotels %}
+                    <section class="package-hotels-section my-5">
+                        <h2 class="package-section-title">Accommodations Included</h2>
+                        <p class="text-muted mb-4">You will be staying at these handpicked properties throughout this journey:</p>
+
+                        <div class="row g-4">
+                            {% for hotel in hotels %}
+                            <div class="col-12">
+                                <div class="card border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-md-row" style="background: var(--cream, #fbf7f6); border: 1px solid var(--border, #e9dcdc) !important;">
+                                    
+                                    <!-- Hotel Thumbnail -->
+                                    <div class="col-md-5 position-relative">
+                                        {% with first_img=hotel.images.first %}
+                                            {% if first_img %}
+                                                <img 
+                                                    src="{{ first_img.image.url }}" 
+                                                    alt="{{ hotel.name }}" 
+                                                    class="w-100 h-100" 
+                                                    style="object-fit: cover; min-height: 220px;"
+                                                >
+                                            {% else %}
+                                                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary-subtle" style="min-height: 220px;">
+                                                    <span class="text-muted">No Image Available</span>
+                                                </div>
+                                            {% endif %}
+                                        {% endwith %}
+                                        
+                                        {% if hotel.rating %}
+                                        <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm" style="background: var(--primary, #5E1718); color: #fff;">
+                                            ★ {{ hotel.rating }}
+                                        </span>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Hotel Details -->
+                                    <div class="col-md-7 p-4 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h4 class="mb-1" style="color: var(--primary, #5E1718); font-weight: 700;">
+                                                {{ hotel.name }}
+                                            </h4>
+                                            <p class="text-muted small mb-2">
+                                                📍 {{ hotel.location }}
+                                            </p>
+                                            <p class="small text-secondary mb-3">
+                                                {{ hotel.description|truncatewords:25 }}
+                                            </p>
+
+                                            {% if hotel.amenities %}
+                                            <div class="d-flex flex-wrap gap-1 mb-2">
+                                                {% for amenity in hotel.amenities.split %}
+                                                    <span class="badge bg-white text-dark border rounded-pill px-2 py-1 small fw-normal">
+                                                        {{ amenity|cut:"," }}
+                                                    </span>
+                                                {% endfor %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="pt-2 border-top d-flex justify-content-between align-items-center">
+                                            <small class="text-muted">Standard check-in applies</small>
+                                            <a href="{% url 'hotel_detail' hotel.slug %}" class="btn btn-sm btn-outline-dark rounded-pill px-3" target="_blank">
+                                                View Hotel Details →
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                    {% endif %}
+                {% endwith %}
+
+                <!-- ========================================= -->
                 <!-- DETAILED ITINERARY SECTION -->
                 <!-- ========================================= -->
                 <section class="itinerary-section my-5">
@@ -145,24 +223,12 @@
                     </div>
                 </section>
 
-                <!-- ========================================= -->
-                <!-- HOTELS -->
-                <!-- ========================================= -->
-                {% with hotels=package.hotels.all %}
-                    {% if hotels %}
-                        <h3 class="mt-4">Hotels Included</h3>
-                        <ul>
-                            {% for hotel in hotels %}
-                                <li>{{ hotel.name }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                {% endwith %}
-
                 <!-- Enquiry Button -->
-                <a href="{% url 'enquiry_create' %}?package={{ package.slug }}" class="btn btn-dark mt-3">
-                    Send Enquiry
-                </a>
+                <div class="d-grid gap-2 d-md-block my-4">
+                    <a href="{% url 'enquiry_create' %}?package={{ package.slug }}" class="btn btn-dark btn-lg px-5">
+                        Send Enquiry for this Package
+                    </a>
+                </div>
 
             </div>
         </div>
@@ -240,16 +306,18 @@
     right: 25px;
 }
 
-/* Timeline / Detailed Itinerary Styles */
+/* Common Section Headers */
+.package-section-title,
 .itinerary-main-title {
     color: #5c1824;
     font-size: 1.85rem;
     font-weight: 700;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     border-bottom: 1px solid #f0e6e7;
     padding-bottom: 0.75rem;
 }
 
+/* Timeline / Detailed Itinerary Styles */
 .timeline-container {
     position: relative;
     padding-left: 5px;

@@ -1,29 +1,19 @@
-<!-- ================= PACKAGES ================= -->
-<section class="section-padding packages-section">
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="section-padding">
     <div class="container">
 
         <div class="section-heading">
-            <div>
-                <span class="section-label">
-                    PLAN YOUR ESCAPE
-                </span>
-
-                <h2>
-                    Popular Packages
-                </h2>
-            </div>
-
-            <a
-                href="{% url 'package_list' %}"
-                class="view-all"
-            >
-                View all →
-            </a>
+            <span>Find Your Journey</span>
+            <h1>Holiday Packages</h1>
+            <p>Explore handcrafted travel experiences and retreats curated just for you.</p>
         </div>
 
         <div class="row g-4">
 
-            {% for package in featured_packages %}
+            {% for package in packages %}
 
             <div class="col-md-6 col-lg-4">
 
@@ -42,34 +32,41 @@
                         </div>
                     {% endif %}
 
+                    <!-- Package Content -->
                     <div class="package-content">
 
-                        <p class="text-muted mb-2">
+                        {% if package.featured %}
+                            <span class="badge-featured mb-2">
+                                Featured
+                            </span>
+                        {% endif %}
+
+                        <h3>{{ package.name }}</h3>
+
+                        <p class="hotel-location mb-2">
                             📍 {{ package.destination }}
                         </p>
 
-                        <h3>
-                            {{ package.name }}
-                        </h3>
-
-                        <p class="package-duration">
-                            {{ package.duration_days }} Days /
-                            {{ package.duration_nights }} Nights
+                        <p class="package-duration mb-2">
+                            ⏱ {{ package.duration_days }} Days / {{ package.duration_nights }} Nights
                         </p>
 
-                        <p>
-                            {{ package.description|truncatewords:15 }}
+                        <p class="small text-muted mb-3">
+                            {{ package.description|truncatewords:14 }}
                         </p>
 
-                        <div class="package-price">
-                            Starting from ₹{{ package.price }}
+                        <div class="hotel-info-row d-flex justify-content-between align-items-center">
+                            <span class="package-price">
+                                ₹{{ package.price }}
+                                <small class="text-muted" style="font-size: 0.8rem; font-weight: normal;">/ person</small>
+                            </span>
                         </div>
 
                         <a
                             href="{% url 'package_detail' package.slug %}"
-                            class="btn btn-dark mt-3"
+                            class="btn btn-dark mt-3 w-100"
                         >
-                            Explore
+                            View Package →
                         </a>
 
                     </div>
@@ -82,7 +79,8 @@
 
             <div class="col-12">
                 <div class="empty-state">
-                    <p>No packages available right now.</p>
+                    <h3>No packages available</h3>
+                    <p>Exciting holiday itineraries are coming soon.</p>
                 </div>
             </div>
 
@@ -92,3 +90,5 @@
 
     </div>
 </section>
+
+{% endblock %}
