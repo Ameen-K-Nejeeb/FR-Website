@@ -26,8 +26,16 @@ def hotel_detail(request, slug):
         available=True
     )
 
+    amenities = [
+        amenity.strip()
+        for amenity in hotel.amenities.split(",")
+        if amenity.strip()
+    ]
+
+
     context = {
         "hotel": hotel,
+        "amenities": amenities
     }
 
     return render(

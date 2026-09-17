@@ -31,6 +31,11 @@ class Package(models.Model):
     blank=True,
     null=True
 )
+    inclusions = models.TextField(
+        blank=True,
+        help_text="Enter each inclusion on a new line."
+    )
+
 
     hotels = models.ManyToManyField(
         Hotel,
