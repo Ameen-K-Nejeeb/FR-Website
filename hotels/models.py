@@ -21,6 +21,11 @@ class Hotel(models.Model):
         default=0
     )
 
+    inclusions = models.TextField(
+            blank=True,
+            help_text="Enter each inclusion on a new line."
+        )
+
     amenities = models.TextField(
         blank=True,
         help_text="Example: WiFi, Pool, Parking, Breakfast"

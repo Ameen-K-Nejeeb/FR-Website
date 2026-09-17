@@ -26,6 +26,13 @@ def hotel_detail(request, slug):
         available=True
     )
 
+    # Convert inclusions into a list
+    inclusions = [
+        item.strip()
+        for item in hotel.inclusions.splitlines()
+        if item.strip()
+    ]
+
     amenities = [
         amenity.strip()
         for amenity in hotel.amenities.split(",")
@@ -35,7 +42,8 @@ def hotel_detail(request, slug):
 
     context = {
         "hotel": hotel,
-        "amenities": amenities
+        "amenities": amenities,
+        "inclusions": inclusions,
     }
 
     return render(
