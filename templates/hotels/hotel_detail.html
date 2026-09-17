@@ -1,361 +1,258 @@
-{% extends "base.html" %}
-
-{% block title %}
-{{ hotel.name }} | Friday Retreats
-{% endblock %}
-
-
-
-
-
-{% block content %}
+{% extends "base.html" %} {% block title %} {{ hotel.name }} | Friday Retreats
+{% endblock %} {% block content %}
 
 <section class="section-padding">
+  <style>
+    .large-image-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
 
-    <style>
-.large-image-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+      width: 55px;
+      height: 55px;
 
-    width: 55px;
-    height: 55px;
+      border: none;
+      border-radius: 50%;
 
-    border: none;
-    border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      color: #222;
 
-    background: rgba(255, 255, 255, 0.85);
-    color: #222;
+      font-size: 28px;
 
-    font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+      cursor: pointer;
 
-    cursor: pointer;
+      z-index: 10;
 
-    z-index: 10;
+      transition: 0.2s ease;
+    }
 
-    transition: 0.2s ease;
-}
+    .large-image-arrow:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.08);
+    }
 
-.large-image-arrow:hover {
-    background: white;
-    transform: translateY(-50%) scale(1.08);
-}
+    .large-image-prev {
+      left: 25px;
+    }
 
-.large-image-prev {
-    left: 25px;
-}
+    .large-image-next {
+      right: 25px;
+    }
+  </style>
 
-.large-image-next {
-    right: 25px;
-}
-</style>
+  <div class="container">
+    <!-- Header -->
 
-    <div class="container">
+    <div class="mb-5">
+      <span class="section-label"> {{ hotel.location }} </span>
 
-        <!-- Header -->
+      <h1 class="display-3 fw-bold mt-2">{{ hotel.name }}</h1>
 
-        <div class="mb-5">
+      <div class="mt-3">
+        <span> ★ {{ hotel.rating }} </span>
 
-            <span class="section-label">
-                {{ hotel.location }}
-            </span>
-
-            <h1 class="display-3 fw-bold mt-2">
-                {{ hotel.name }}
-            </h1>
-
-            <div class="mt-3">
-
-                <span>
-                    ★ {{ hotel.rating }}
-                </span>
-
-                <span class="text-muted ms-3">
-                    From ₹{{ hotel.price_per_night }} / night
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <!-- Images -->
-
-        <!-- Images -->
-<div class="row g-3 mb-5">
-
-    {% with images=hotel.images.all %}
-
-        {% if images %}
-
-        <div class="col-md-6">
-
-            <!-- Image Carousel -->
-            <div
-                id="hotelImageCarousel"
-                class="carousel slide"
-            >
-
-                <div class="carousel-inner rounded-4">
-
-                    {% for image in images %}
-
-                    <div
-                        class="carousel-item {% if forloop.first %}active{% endif %}"
-                    >
-
-                        <!-- Clickable Image -->
-                        <img
-                            src="{{ image.image.url }}"
-                            alt="{{ image.caption|default:hotel.name }}"
-                            class="d-block w-100 rounded-4 hotel-gallery-image"
-                            style="
-                                height: 350px;
-                                object-fit: cover;
-                                cursor: pointer;
-                            "
-                            data-bs-toggle="modal"
-                            data-bs-target="#hotelImageModal"
-                            data-image="{{ image.image.url }}"
-                            data-caption="{{ image.caption|default:hotel.name }}"
-                        >
-
-                    </div>
-
-                    {% endfor %}
-
-                </div>
-
-
-                <!-- Left / Right Arrows -->
-                {% if images|length > 1 %}
-
-                <button
-                    class="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#hotelImageCarousel"
-                    data-bs-slide="prev"
-                >
-                    <span
-                        class="carousel-control-prev-icon"
-                        aria-hidden="true"
-                    ></span>
-
-                    <span class="visually-hidden">
-                        Previous
-                    </span>
-                </button>
-
-
-                <button
-                    class="carousel-control-next"
-                    type="button"
-                    data-bs-target="#hotelImageCarousel"
-                    data-bs-slide="next"
-                >
-                    <span
-                        class="carousel-control-next-icon"
-                        aria-hidden="true"
-                    ></span>
-
-                    <span class="visually-hidden">
-                        Next
-                    </span>
-                </button>
-
-                {% endif %}
-
-            </div>
-
-        </div>
-
-        {% else %}
-
-        <!-- No Image -->
-        <div class="col-md-6">
-
-            <div
-                class="image-placeholder rounded-4"
-                style="height: 350px;"
-            >
-                {{ hotel.location }}
-            </div>
-
-        </div>
-
-        {% endif %}
-
-    {% endwith %}
-
-</div>
-
-
-<!-- Large Image Modal -->
-<!-- Large Image Modal -->
-<div
-    class="modal fade"
-    id="hotelImageModal"
-    tabindex="-1"
-    aria-hidden="true"
->
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-
-        <div class="modal-content bg-dark border-0">
-
-            <div class="modal-header border-0">
-
-                <h5
-                    class="modal-title text-white"
-                    id="hotelImageModalCaption"
-                >
-                    {{ hotel.name }}
-                </h5>
-
-                <button
-                    type="button"
-                    class="btn-close btn-close-white"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
-
-            </div>
-
-            <div
-                class="modal-body p-0 position-relative text-center"
-                style="min-height: 70vh; display: flex; align-items: center; justify-content: center;"
-            >
-
-                <!-- Large Image -->
-                <img
-                    id="hotelLargeImage"
-                    src=""
-                    alt="{{ hotel.name }}"
-                    class="img-fluid rounded-3"
-                    style="
-                        max-height: 80vh;
-                        max-width: 90%;
-                        width: auto;
-                        object-fit: contain;
-                    "
-                >
-
-                <!-- Previous -->
-                <button
-                    id="largeImagePrev"
-                    type="button"
-                    class="large-image-arrow large-image-prev"
-                >
-                    ❮
-                </button>
-
-                <!-- Next -->
-                <button
-                    id="largeImageNext"
-                    type="button"
-                    class="large-image-arrow large-image-next"
-                >
-                    ❯
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-</div>
-
-
-
-        <div class="row g-5">
-
-            <!-- Description -->
-
-            <div class="col-lg-8">
-
-                <h2 class="mb-3">
-                    About this stay
-                </h2>
-
-                <p
-                    class="text-muted"
-                    style="line-height: 1.8;"
-                >
-                    {{ hotel.description }}
-                </p>
-
-
-                <h3 class="mt-5 mb-3">
-    Amenities
-</h3>
-
-<div class="d-flex flex-wrap gap-2">
-
-    {% for amenity in amenities %}
-
-        <span class="badge bg-white text-dark border rounded-pill px-3 py-2 small fw-normal">
-            {{ amenity }}
+        <span class="text-muted ms-3">
+          From ₹{{ hotel.price_per_night }} / night
         </span>
+      </div>
+    </div>
 
-    {% empty %}
+    <!-- Images -->
 
-        <p class="text-muted">
-            No amenities available.
+    <!-- Images -->
+    <div class="row g-3 mb-5">
+      {% with images=hotel.images.all %} {% if images %}
+
+      <div class="col-md-6">
+        <!-- Image Carousel -->
+        <div id="hotelImageCarousel" class="carousel slide">
+          <div class="carousel-inner rounded-4">
+            {% for image in images %}
+
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <!-- Clickable Image -->
+              <img
+                src="{{ image.image.url }}"
+                alt="{{ image.caption|default:hotel.name }}"
+                class="d-block w-100 rounded-4 hotel-gallery-image"
+                style="height: 350px; object-fit: cover; cursor: pointer"
+                data-bs-toggle="modal"
+                data-bs-target="#hotelImageModal"
+                data-image="{{ image.image.url }}"
+                data-caption="{{ image.caption|default:hotel.name }}"
+              />
+            </div>
+
+            {% endfor %}
+          </div>
+
+          <!-- Left / Right Arrows -->
+          {% if images|length > 1 %}
+
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#hotelImageCarousel"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+            <span class="visually-hidden"> Previous </span>
+          </button>
+
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#hotelImageCarousel"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+            <span class="visually-hidden"> Next </span>
+          </button>
+
+          {% endif %}
+        </div>
+      </div>
+
+      {% else %}
+
+      <!-- No Image -->
+      <div class="col-md-6">
+        <div class="image-placeholder rounded-4" style="height: 350px">
+          {{ hotel.location }}
+        </div>
+      </div>
+
+      {% endif %} {% endwith %}
+    </div>
+
+    <!-- Large Image Modal -->
+    <!-- Large Image Modal -->
+    <div
+      class="modal fade"
+      id="hotelImageModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content bg-dark border-0">
+          <div class="modal-header border-0">
+            <h5 class="modal-title text-white" id="hotelImageModalCaption">
+              {{ hotel.name }}
+            </h5>
+
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div
+            class="modal-body p-0 position-relative text-center"
+            style="
+              min-height: 70vh;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <!-- Large Image -->
+            <img
+              id="hotelLargeImage"
+              src=""
+              alt="{{ hotel.name }}"
+              class="img-fluid rounded-3"
+              style="
+                max-height: 80vh;
+                max-width: 90%;
+                width: auto;
+                object-fit: contain;
+              "
+            />
+
+            <!-- Previous -->
+            <button
+              id="largeImagePrev"
+              type="button"
+              class="large-image-arrow large-image-prev"
+            >
+              ❮
+            </button>
+
+            <!-- Next -->
+            <button
+              id="largeImageNext"
+              type="button"
+              class="large-image-arrow large-image-next"
+            >
+              ❯
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-5">
+      <!-- Description -->
+
+      <div class="col-lg-8">
+        <h2 class="mb-3">About this stay</h2>
+
+        <p class="text-muted" style="line-height: 1.8">
+          {{ hotel.description }}
         </p>
 
-    {% endfor %}
+        <h3 class="mt-5 mb-3">Amenities</h3>
 
-</div>
+        <div class="d-flex flex-wrap gap-2">
+          {% for amenity in amenities %}
 
-            </div>
+          <span
+            class="badge bg-white text-dark border rounded-pill px-3 py-2 small fw-normal"
+          >
+            {{ amenity }}
+          </span>
 
+          {% empty %}
 
-            <!-- Booking / Enquiry -->
+          <p class="text-muted">No amenities available.</p>
 
-            <div class="col-lg-4">
-
-                <div
-                    class="p-4 rounded-4"
-                    style="background: #f7f7f4;"
-                >
-
-                    <small class="text-muted">
-                        Starting from
-                    </small>
-
-                    <h2 style="font-family: fangsong;">
-                        ₹{{ hotel.price_per_night }}
-                    </h2>
-
-                    <p class="text-muted">
-                        per night
-                    </p>
-
-
-                    <a
-                        href="{% url 'enquiry_create' %}?hotel={{ hotel.slug }}"
-                        class="btn btn-dark btn-lg w-100"
-                    >
-                        Send Enquiry
-                    </a>
-
-                </div>
-
-            </div>
-
+          {% endfor %}
         </div>
+      </div>
 
+      <!-- Booking / Enquiry -->
+
+      <div class="col-lg-4">
+        <div class="p-4 rounded-4" style="background: #f7f7f4">
+          <small class="text-muted"> Starting from </small>
+
+          <h2 style="font-family: fangsong">₹{{ hotel.price_per_night }}</h2>
+
+          <p class="text-muted">per night</p>
+
+          <a
+            href="{% url 'enquiry_create' %}?hotel={{ hotel.slug }}"
+            class="btn btn-dark btn-lg w-100"
+          >
+            Send Enquiry
+          </a>
+        </div>
+      </div>
     </div>
-
+  </div>
 </section>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-
+  document.addEventListener("DOMContentLoaded", function () {
     const images = Array.from(
-        document.querySelectorAll(".hotel-gallery-image")
+      document.querySelectorAll(".hotel-gallery-image"),
     );
 
     const largeImage = document.getElementById("hotelLargeImage");
@@ -366,81 +263,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let currentIndex = 0;
 
-
     function showLargeImage(index) {
+      if (images.length === 0) {
+        return;
+      }
 
-        if (images.length === 0) {
-            return;
-        }
+      // Loop around
+      if (index < 0) {
+        index = images.length - 1;
+      }
 
-        // Loop around
-        if (index < 0) {
-            index = images.length - 1;
-        }
+      if (index >= images.length) {
+        index = 0;
+      }
 
-        if (index >= images.length) {
-            index = 0;
-        }
+      currentIndex = index;
 
-        currentIndex = index;
+      const image = images[currentIndex];
 
-        const image = images[currentIndex];
+      largeImage.src = image.getAttribute("data-image");
 
-        largeImage.src = image.getAttribute("data-image");
-
-        caption.textContent =
-            image.getAttribute("data-caption") || "{{ hotel.name }}";
+      caption.textContent =
+        image.getAttribute("data-caption") || "{{ hotel.name }}";
     }
-
 
     // Click normal image
     images.forEach(function (image, index) {
+      image.addEventListener("click", function () {
+        currentIndex = index;
 
-        image.addEventListener("click", function () {
-
-            currentIndex = index;
-
-            showLargeImage(currentIndex);
-
-        });
-
+        showLargeImage(currentIndex);
+      });
     });
-
 
     // Previous image
     previousButton.addEventListener("click", function () {
-
-        showLargeImage(currentIndex - 1);
-
+      showLargeImage(currentIndex - 1);
     });
-
 
     // Next image
     nextButton.addEventListener("click", function () {
-
-        showLargeImage(currentIndex + 1);
-
+      showLargeImage(currentIndex + 1);
     });
-
 
     // Keyboard controls
     document.addEventListener("keydown", function (event) {
+      const modal = document.getElementById("hotelImageModal");
 
-        const modal = document.getElementById("hotelImageModal");
+      if (!modal.classList.contains("show")) {
+        return;
+      }
 
-        if (!modal.classList.contains("show")) {
-            return;
-        }
+      if (event.key === "ArrowLeft") {
+        showLargeImage(currentIndex - 1);
+      }
 
-        if (event.key === "ArrowLeft") {
-            showLargeImage(currentIndex - 1);
-        }
-
-        if (event.key === "ArrowRight") {
-            showLargeImage(currentIndex + 1);
-        }
-
+      if (event.key === "ArrowRight") {
+        showLargeImage(currentIndex + 1);
+      }
     });
-
-});
-</script>{% endblock %}
+  });
+</script>
+{% endblock %}
