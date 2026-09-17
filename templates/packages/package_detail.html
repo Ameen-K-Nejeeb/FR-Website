@@ -132,28 +132,99 @@
                                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-md-row" style="background: var(--cream, #fbf7f6); border: 1px solid var(--border, #e9dcdc) !important;">
                                     
                                     <!-- Hotel Thumbnail -->
-                                    <div class="col-md-5 position-relative">
-                                        {% with first_img=hotel.images.first %}
-                                            {% if first_img %}
-                                                <img 
-                                                    src="{{ first_img.image.url }}" 
-                                                    alt="{{ hotel.name }}" 
-                                                    class="w-100 h-100" 
-                                                    style="object-fit: cover; min-height: 220px;"
-                                                >
-                                            {% else %}
-                                                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary-subtle" style="min-height: 220px;">
-                                                    <span class="text-muted">No Image Available</span>
-                                                </div>
-                                            {% endif %}
-                                        {% endwith %}
-                                        
-                                        {% if hotel.rating %}
-                                        <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm" style="background: var(--primary, #5E1718); color: #fff;">
-                                            ★ {{ hotel.rating }}
-                                        </span>
-                                        {% endif %}
-                                    </div>
+                                    <!-- Hotel Image Carousel -->
+<div class="col-md-5 position-relative">
+
+    {% with hotel_images=hotel.images.all %}
+
+        {% if hotel_images %}
+
+            <div id="hotelCarousel{{ hotel.id }}"
+                 class="carousel slide h-100"
+                 data-bs-ride="carousel">
+
+                <div class="carousel-inner h-100">
+
+                    {% for image in hotel_images %}
+
+                        <div class="carousel-item
+                            {% if forloop.first %}active{% endif %}
+                            h-100">
+
+                            <img
+                                src="{{ image.image.url }}"
+                                alt="{{ hotel.name }}"
+                                class="d-block w-100 h-100 hotel-carousel-image"
+                            >
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- Previous Button -->
+
+                {% if hotel_images|length > 1 %}
+
+                    <button
+                        class="carousel-control-prev"
+                        type="button"
+                        data-bs-target="#hotelCarousel{{ hotel.id }}"
+                        data-bs-slide="prev"
+                    >
+                        <span class="carousel-control-prev-icon"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+
+
+                    <!-- Next Button -->
+
+                    <button
+                        class="carousel-control-next"
+                        type="button"
+                        data-bs-target="#hotelCarousel{{ hotel.id }}"
+                        data-bs-slide="next"
+                    >
+                        <span class="carousel-control-next-icon"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-secondary-subtle"
+                 style="min-height: 220px;">
+
+                <span class="text-muted">
+                    No Image Available
+                </span>
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- Hotel Rating -->
+
+    {% if hotel.rating %}
+
+        <span
+            class="badge position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm"
+            style="background: var(--primary, #5E1718); color: #fff; z-index: 5;"
+        >
+            ★ {{ hotel.rating }}
+        </span>
+
+    {% endif %}
+
+</div>
 
                                     <!-- Hotel Details -->
                                     <div class="col-md-7 p-4 d-flex flex-column justify-content-between">
