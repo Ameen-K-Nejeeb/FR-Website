@@ -951,3 +951,133 @@ footer a:hover {
     background: var(--cream);
     color: var(--text-light);
 }
+
+
+
+/* ========================================= */
+/* PACKAGE INCLUSIONS SECTION */
+/* ========================================= */
+
+.package-inclusions-section {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+
+/* Header */
+
+.inclusions-header {
+    position: relative;
+}
+
+
+.inclusions-eyebrow {
+    display: inline-block;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    color: #852A28;
+
+    margin-bottom: 0.6rem;
+}
+
+
+/* Inclusion Card */
+
+.inclusion-card {
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 18px 20px;
+
+    min-height: 70px;
+
+    background: #FDFBFB;
+
+    border: 1px solid #E9DCDC;
+
+    border-radius: 14px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+
+}
+
+
+/* Hover Effect */
+
+.inclusion-card:hover {
+
+    transform: translateY(-3px);
+
+    border-color: #852A28;
+
+    box-shadow:
+        0 8px 22px rgba(94, 23, 24, 0.08);
+
+}
+
+
+/* Check Icon */
+
+.inclusion-icon {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    background: #F3E6E5;
+
+    color: #5E1718;
+
+}
+
+
+/* Inclusion Text */
+
+.inclusion-text {
+
+    font-size: 0.95rem;
+
+    font-weight: 500;
+
+    color: #333333;
+
+    line-height: 1.5;
+
+}
+
+
+/* Mobile Responsive */
+
+@media (max-width: 576px) {
+
+    .inclusion-card {
+
+        padding: 15px 16px;
+
+    }
+
+    .inclusion-text {
+
+        font-size: 0.9rem;
+
+    }
+
+}
